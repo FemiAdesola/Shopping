@@ -1,4 +1,6 @@
 using Backend.Database;
+using Backend.Model;
+using Microsoft.AspNetCore.Identity;
 
 namespace Backend
 {
@@ -17,6 +19,9 @@ namespace Backend
             services.AddHttpContextAccessor();
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
+
+              services.AddIdentity<AppUser, IdentityRole>()
+            .AddEntityFrameworkStores<AppDbContext>();
         
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

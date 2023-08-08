@@ -1,3 +1,4 @@
+using Backend.Model;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,5 +23,7 @@ namespace Backend.Database
                     connString)
                 .UseSnakeCaseNamingConvention();
         }
+
+           public DbSet<AppUser> AppUsers { get; set; }  = null!;
     }
 }
