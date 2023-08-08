@@ -100,7 +100,7 @@ namespace Backend.Controllers
         }
 
         [HttpPut("{id:int}")]
-        public async Task<ActionResult<ApiResponse>> UpProduct(int id, [FromForm]ProductUpdateDTO productUpdateDTO)
+        public async Task<ActionResult<ApiResponse>> UpdateProduct(int id, [FromForm]ProductUpdateDTO productUpdateDTO)
         {
             try
             {
@@ -156,6 +156,44 @@ namespace Backend.Controllers
             return _response;
         }
 
-        
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult<ApiResponse>> DeleteProduct(int id)
+        {
+            try
+            {
+                if (id == 0)
+                {
+                    _response.StatusCode = HttpStatusCode.BadRequest;
+                    _response.IsSuccess = false;
+                    return BadRequest();
+                }
+                
+                Product productToBeDeleted = await _context.Products.FirstOrDefaultAsync(u => u.Id == id);
+                if (productToBeDeleted == null)
+                {
+                    _response.StatusCode = HttpStatusCode.BadRequest;
+                    _response.IsSuccess = false;
+                    return BadRequest();
+                }
+
+                await _fileStorage.DeleteFile(containerName, productToBeDeleted.Image);
+                
+                // for adding delay 
+                int milliseconds = 1000;
+                Thread.Sleep(milliseconds);
+
+                _context.Products.Remove(productToBeDeleted);
+                await _context.SaveChangesAsync();
+                // _response.Result = productToBeDeleted;
+                _response.StatusCode=HttpStatusCode.NoContent;
+                return  Ok(_response);
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.ErrorMessages = new List<string>() { ex.ToString() };
+            }
+            return _response;
+        }
     }
 }
