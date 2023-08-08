@@ -79,11 +79,11 @@ namespace Backend.Controllers
                         Image = await _fileStorage.SaveFile(containerName, productCreateDTO.File)
                     };
 
-                    _context.Add(product);
+                    _context.Products.Add(product);
                     await _context.SaveChangesAsync();
-                    _response.Result = product.Id;
+                    _response.Result = product;
                     _response.StatusCode=HttpStatusCode.Created;
-                     return CreatedAtRoute("GetProduct", new { id = product.Id }, _response);
+                    return CreatedAtRoute("GetProduct", new { id = product.Id }, _response);
                 }
                 else
                 {
