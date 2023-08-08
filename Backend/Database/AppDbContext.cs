@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Database
 {
-    public class AppDbContext : IdentityDbContext
+    public class AppDbContext : IdentityDbContext <AppUser>
     {
         static AppDbContext()
         {
@@ -25,5 +25,6 @@ namespace Backend.Database
         }
 
            public DbSet<AppUser> AppUsers { get; set; }  = null!;
+           public DbSet<Product> Products { get; set; } = null!;
     }
 }

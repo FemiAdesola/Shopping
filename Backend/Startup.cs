@@ -20,7 +20,7 @@ namespace Backend
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
 
-              services.AddIdentity<AppUser, IdentityRole>()
+            services.AddIdentity<AppUser, IdentityRole>()
             .AddEntityFrameworkStores<AppDbContext>();
         
         }
