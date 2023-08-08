@@ -1,3 +1,5 @@
+using Backend.Database;
+
 namespace Backend
 {
     public class Startup
@@ -11,6 +13,7 @@ namespace Backend
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddDbContext<AppDbContext>();
             services.AddHttpContextAccessor();
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
