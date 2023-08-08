@@ -1,5 +1,7 @@
 using Backend.Database;
 using Backend.Model;
+using Backend.Services.Implementation;
+using Backend.Services.Interface;
 using Microsoft.AspNetCore.Identity;
 
 namespace Backend
@@ -19,6 +21,8 @@ namespace Backend
             services.AddHttpContextAccessor();
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
+            
+            services.AddScoped<IFileStorage, LocalFileStorage>(); // for adding image files
 
             services.AddIdentity<AppUser, IdentityRole>()
             .AddEntityFrameworkStores<AppDbContext>();
