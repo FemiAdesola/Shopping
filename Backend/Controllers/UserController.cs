@@ -8,6 +8,10 @@ using System.Net;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
+using System.Text;
 
 namespace Backend.Controllers
 {
@@ -17,20 +21,23 @@ namespace Backend.Controllers
         private ApiResponse _response;
         private readonly UserManager<AppUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        private string _configuration;
+        // private string configurationSecret;
+        private readonly IConfiguration _config;
         public UserController(
             AppDbContext context,
-            IConfiguration configuration,
+            // IConfiguration configuration,
             UserManager<AppUser> userManager,
-            RoleManager<IdentityRole> roleManager
+            RoleManager<IdentityRole> roleManager,
+            IConfiguration config
 
         )
         {
             _context = context;
             _response = new ApiResponse();
-            _configuration = configuration.GetValue<string>("ApiSettings:Secret")!;
+            // configurationSecret = configuration.GetValue<string>("ApiSettings:Secret");
             _userManager = userManager;
             _roleManager = roleManager;
+            _config = config;
         }
 
         [HttpPost("register")]
@@ -108,10 +115,34 @@ namespace Backend.Controllers
                 return BadRequest(_response);
             }
 
+            // Method to generate JWT Token
+            var roles = await _userManager.GetRolesAsync(userFromDb); // for geting roles
+            JwtSecurityTokenHandler tokenHandler = new();
+            // byte[] key = Encoding.ASCII.GetBytes(configurationSecret);
+            var secret = _config["AppSettings:Secret"];
+            SecurityTokenDescriptor tokenDescriptor = new()
+            {
+                Subject = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim("fullName", userFromDb.Name),
+                    new Claim("id", userFromDb.Id.ToString()),
+                    new Claim(ClaimTypes.Email, userFromDb.UserName.ToString()),
+                    new Claim(ClaimTypes.Role, roles.FirstOrDefault()),
+                }),
+                Expires = DateTime.UtcNow.AddDays(2),
+                SigningCredentials = new SigningCredentials(
+                    new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret!)),
+                    SecurityAlgorithms.HmacSha256Signature
+                    )
+            };
+
+            SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
+            // 
+
             UserDTO userDTO = new()
             {
                 Email = userFromDb.Email,
-                Token = "Token is here"
+                Token = tokenHandler.WriteToken(token)
             };
 
             if (userDTO.Email == null || string.IsNullOrEmpty(userDTO.Token))
