@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Backend.Extension;
 
 namespace Backend
 {
@@ -24,6 +25,7 @@ namespace Backend
             services.AddHttpContextAccessor();
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
+            services.AddSwaggerDocumentation();
             
             services.AddScoped<IFileStorage, LocalFileStorage>(); // for adding image files
 
@@ -40,7 +42,6 @@ namespace Backend
             });
             
             services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
-
 
             // For Authentication
            services.AddAuthentication(u =>
@@ -84,6 +85,7 @@ namespace Backend
                     app.UseSwaggerUI();
                 }
 
+            app.UseSwaggerDocumentation();  
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
