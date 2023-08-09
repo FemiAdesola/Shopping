@@ -90,5 +90,42 @@ namespace Backend.Controllers
             return BadRequest(_response);
 
         }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginDTO model)
+        {
+            AppUser userFromDb = _context.AppUsers
+                .FirstOrDefault(u => u.UserName.ToLower() == model.UserName.ToLower());
+
+            bool isValid = await _userManager.CheckPasswordAsync(userFromDb, model.Password); // check password
+
+            if (isValid == false)
+            {
+                _response.Result = new UserDTO();
+                _response.StatusCode = HttpStatusCode.BadRequest;
+                _response.IsSuccess = false;
+                _response.ErrorMessages.Add("Username or password is incorrect");
+                return BadRequest(_response);
+            }
+
+            UserDTO userDTO = new()
+            {
+                Email = userFromDb.Email,
+                Token = "Token is here"
+            };
+
+            if (userDTO.Email == null || string.IsNullOrEmpty(userDTO.Token))
+            {
+                _response.StatusCode = HttpStatusCode.BadRequest;
+                _response.IsSuccess = false;
+                _response.ErrorMessages.Add("Username or password is incorrect");
+                return BadRequest(_response);
+            }
+            _response.StatusCode = HttpStatusCode.OK;
+            _response.IsSuccess = true;
+            _response.Result = userDTO;
+            return Ok(_response);
+        }
+
     }
 }
