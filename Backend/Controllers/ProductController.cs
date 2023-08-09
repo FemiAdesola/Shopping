@@ -123,8 +123,6 @@ namespace Backend.Controllers
                         return BadRequest();
                     }
                     //
-
-
                     productToUpdate.Title = productUpdateDTO.Title;
                     productToUpdate.Price = productUpdateDTO.Price;
                     productToUpdate.Category = productUpdateDTO.Category;
@@ -136,7 +134,6 @@ namespace Backend.Controllers
                     {
                         productToUpdate.Image = await _fileStorage.UpdateFile(containerName, productUpdateDTO.File,productToUpdate.Image);
                     }
-                   
                     _context.Products.Update(productToUpdate);
                     await _context.SaveChangesAsync();
                     _response.Result = productToUpdate;

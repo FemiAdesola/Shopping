@@ -21,20 +21,16 @@ namespace Backend.Controllers
         private ApiResponse _response;
         private readonly UserManager<AppUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        // private string configurationSecret;
         private readonly IConfiguration _config;
         public UserController(
             AppDbContext context,
-            // IConfiguration configuration,
             UserManager<AppUser> userManager,
             RoleManager<IdentityRole> roleManager,
             IConfiguration config
-
         )
         {
             _context = context;
             _response = new ApiResponse();
-            // configurationSecret = configuration.GetValue<string>("ApiSettings:Secret");
             _userManager = userManager;
             _roleManager = roleManager;
             _config = config;
@@ -118,7 +114,6 @@ namespace Backend.Controllers
             // Method to generate JWT Token
             var roles = await _userManager.GetRolesAsync(userFromDb); // for geting roles
             JwtSecurityTokenHandler tokenHandler = new();
-            // byte[] key = Encoding.ASCII.GetBytes(configurationSecret);
             var secret = _config["AppSettings:Secret"];
             SecurityTokenDescriptor tokenDescriptor = new()
             {
@@ -135,7 +130,6 @@ namespace Backend.Controllers
                     SecurityAlgorithms.HmacSha256Signature
                     )
             };
-
             SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
             // 
 
@@ -144,7 +138,6 @@ namespace Backend.Controllers
                 Email = userFromDb.Email,
                 Token = tokenHandler.WriteToken(token)
             };
-
             if (userDTO.Email == null || string.IsNullOrEmpty(userDTO.Token))
             {
                 _response.StatusCode = HttpStatusCode.BadRequest;
@@ -157,6 +150,5 @@ namespace Backend.Controllers
             _response.Result = userDTO;
             return Ok(_response);
         }
-
     }
 }
