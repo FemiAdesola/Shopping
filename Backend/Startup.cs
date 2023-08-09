@@ -3,6 +3,9 @@ using Backend.Model;
 using Backend.Services.Implementation;
 using Backend.Services.Interface;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace Backend
 {
@@ -37,6 +40,27 @@ namespace Backend
             });
             
             services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
+
+
+            // For Authentication
+           services.AddAuthentication(u =>
+            {
+                u.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                u.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(u =>
+            {
+                u.RequireHttpsMetadata = false;
+                u.SaveToken = true;
+                u.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                           Encoding.UTF8.GetBytes(Configuration["AppSettings:Secret"]!)),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
+            /// 
         
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -51,6 +75,7 @@ namespace Backend
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
+            app.UseAuthentication();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
