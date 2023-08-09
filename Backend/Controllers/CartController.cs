@@ -27,7 +27,9 @@ namespace Backend.Controllers
             int updateQuantityBy
             )
         {
-            Cart cart = _context.Carts.Include(u=>u.CartItems).FirstOrDefault(u => u.UserId == userId);
+            Cart cart = _context.Carts
+                .Include(u=>u.CartItems)
+                .FirstOrDefault(u => u.UserId == userId);
             Product product = _context.Products.FirstOrDefault(u => u.Id == productId);
             if(product == null)
             {
@@ -39,7 +41,6 @@ namespace Backend.Controllers
             if (cart == null && updateQuantityBy > 0)
             {
                 //create a  cart & add cart item
-
                 Cart newCart = new() { UserId = userId };
                 _context.Carts.Add(newCart);
                 _context.SaveChanges();
@@ -54,7 +55,45 @@ namespace Backend.Controllers
                 _context.CartItems.Add(newCartItem);
                 _context.SaveChanges();
             }
-
+            else
+            {
+                //checking if the shopping cart exists
+                CartItem cartItemInCart = cart.CartItems.FirstOrDefault(
+                    u => u.ProductId == productId);
+                if (cartItemInCart == null)
+                {
+                    //item does not exist in current cart
+                    CartItem newCartItem = new()
+                    {
+                        ProductId = productId,
+                        Quantity = updateQuantityBy,
+                        CartId = cart.Id,
+                        Product = null
+                    };
+                    _context.CartItems.Add(newCartItem);
+                    _context.SaveChanges();
+                }
+                else
+                {
+                    //item already exist in the cart and we have to update quantity
+                    int newQuantity = cartItemInCart.Quantity + updateQuantityBy;
+                    if (updateQuantityBy == 0 || newQuantity <= 0)
+                    {
+                        //remove cart item from cart and if it is the only item then remove cart
+                        _context.CartItems.Remove(cartItemInCart);
+                        if (cart.CartItems.Count() == 1)
+                        {
+                            _context.Carts.Remove(cart);
+                        }
+                        _context.SaveChanges();
+                    }
+                    else
+                    {
+                        cartItemInCart.Quantity = newQuantity;
+                        _context.SaveChanges();
+                    }
+                }
+            }
             return _response;
         }
     }
