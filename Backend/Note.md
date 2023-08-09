@@ -8,3 +8,6 @@
 + dotnet add package Microsoft.EntityFrameworkCore.Tools --version 7.0.9
 + dotnet add package Microsoft.AspNetCore.Mvc.NewtonsoftJson --version 7.0.9
 + dotnet add package AutoMapper.Extensions.Microsoft.DependencyInjection --version 12.0.1
+
+dotnet add package ExpressionPowerTools.Serialization.EFCore.AspNetCore --version 0.9.7-beta
+
