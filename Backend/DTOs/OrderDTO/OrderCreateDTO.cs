@@ -1,12 +1,7 @@
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Backend.Model
+namespace Backend.DTOs.OrderDTO
 {
-    public class Order
+    public class OrderCreateDTO
     {
-        [Key]
-        public int OrderId { get; set; }
         [Required]
         public string PickupName { get; set; }
         [Required]
@@ -14,17 +9,13 @@ namespace Backend.Model
         [Required]
         public string PickupEmail { get; set; }
 
-        public string AppUserId { get; set; }
         [ForeignKey("AppUserId")]
         public AppUser User { get; set; }
         public double OrderTotal { get; set; }
 
-
-        public DateTime OrderDate { get; set; }
         public string StripePaymentIntentID { get; set; }
         public string Status { get; set; }
         public int TotalItems { get; set; }
-
-        public IEnumerable<OrderDetails> OrderDetails { get; set; }
+        public IEnumerable<OrderDetailsDTO> OrderDetailsDTO{ get; set; }
     }
 }
