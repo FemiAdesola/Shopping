@@ -53,7 +53,7 @@ namespace Backend.Controllers
             }
             _response.Result = product;
             _response.StatusCode = HttpStatusCode.OK;
-             return Ok(_response);
+            return Ok(_response);
         }
 
         [HttpPost]

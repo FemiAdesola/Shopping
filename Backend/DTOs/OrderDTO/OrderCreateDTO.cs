@@ -12,8 +12,7 @@ namespace Backend.DTOs.OrderDTO
         [Required]
         public string PickupEmail { get; set; }
 
-        [ForeignKey("AppUserId")]
-        public AppUser User { get; set; }
+        public string AppUserId { get; set; }
         public double OrderTotal { get; set; }
 
         public string StripePaymentIntentID { get; set; }
