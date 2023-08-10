@@ -96,5 +96,42 @@ namespace Backend.Controllers
             }
             return _response;
         }
+
+        [HttpGet]
+        public async Task<ActionResult<ApiResponse>> GetCart(string userId)
+        {
+            try
+            {
+                Cart cart;
+                if (string.IsNullOrEmpty(userId))
+                {
+                    cart = new Cart();
+                }
+                else
+                {
+                    cart= _context.Carts
+                        .Include(u => u.CartItems)
+                        .ThenInclude(u => u.Product)
+                        .FirstOrDefault(u => u.UserId == userId);
+                }
+                //  for get cart item total price
+                if (cart.CartItems != null && cart.CartItems.Count > 0) {
+                    cart.CartTotal = cart.CartItems.Sum(u => u.Quantity * u.Product.Price);
+                }
+                //
+                _response.Result = cart;
+                _response.StatusCode = HttpStatusCode.OK;
+                return Ok(_response);
+
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.ErrorMessages
+                    = new List<string>() { ex.ToString() };
+                _response.StatusCode = HttpStatusCode.BadRequest;
+            }
+            return _response;
+        }
     }
 }
