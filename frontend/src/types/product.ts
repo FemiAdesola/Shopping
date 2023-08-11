@@ -5,5 +5,5 @@ export default interface ProductType {
   image: string;
   category: string;
   productType: string;
-  id: number;
+  id: number | string;
 }
