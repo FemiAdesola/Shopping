@@ -11,3 +11,5 @@
 
 dotnet add package ExpressionPowerTools.Serialization.EFCore.AspNetCore --version 0.9.7-beta
 
+## for stripe 
+dotnet add package Stripe.net --version 41.27.0
