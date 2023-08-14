@@ -1,5 +1,6 @@
 import React from 'react';
 import { ProductType } from '../../types';
+import { Link } from 'react-router-dom';
 
 interface Props {
   product: ProductType;
@@ -14,13 +15,16 @@ const ProductCard = (props:Props) => {
         >
           <div className="card-body pt-2">
             <div className="row col-10 offset-1 p-4 image ">
-              <img
-                            src={props.product.image}
-                            className="w-100% mt-5 image-fluid"
-                            // style={{ borderRadius: "50%" }}
-                            alt={props.product.title}
-                            width="100 % "height="100%"
-              />
+              <Link to={`/productDetails/${props.product.id}`}>
+                <img
+                  src={props.product.image}
+                  className="w-100% mt-5 image-fluid"
+                  // style={{ borderRadius: "50%" }}
+                  alt={props.product.title}
+                  width="100 % "
+                  height="100%"
+                />
+              </Link>
             </div>
             {props.product.productType &&
               props.product.productType.length > 0 && (
@@ -55,7 +59,10 @@ const ProductCard = (props:Props) => {
             ></i>
             <div className="text-center">
               <p className="card-title m-0 text-success fs-3">
-                {props.product.title}
+                <Link to={`/productDetails/${props.product.id}`}
+                style={{textDecoration: "none", color:"gray"}}>
+                  {props.product.title}
+                </Link>
               </p>
               <p className="badge bg-secondary" style={{ fontSize: "12px" }}>
                 {props.product.category}

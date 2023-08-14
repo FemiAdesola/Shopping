@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import { Footer, Header } from '../Components/Layout';
 import {Home, NotFound} from '../Pages/index';
+import { ProductDetails } from '../Components/Product/index';
 
 function App() {
   
@@ -12,6 +13,10 @@ function App() {
       <div className="pb-5">
         <Routes>
           <Route path="/" element={<Home />}></Route>
+          <Route
+            path="/productDetails/:productId"
+            element={<ProductDetails />}
+          ></Route>
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </div>
