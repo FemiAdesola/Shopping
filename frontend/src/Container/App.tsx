@@ -1,15 +1,22 @@
 import React from 'react';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+
 import { Footer, Header } from '../Components/Layout';
-import Home from '../Pages/Home';
+import {Home, NotFound} from '../Pages/index';
 
 function App() {
   
   return (
-    <div>
-      <Header/>
-      <Home/>
-      <Footer/>
-    </div>
+    <BrowserRouter>
+      <Header />
+      <div className="pb-5">
+        <Routes>
+          <Route path="/" element={<Home />}></Route>
+          <Route path="*" element={<NotFound />}></Route>
+        </Routes>
+      </div>
+      <Footer />
+    </BrowserRouter>
   );
 }
 

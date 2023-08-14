@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 let logo = require("../../Assets/Images/computer.png");
 
 const Header = () => {
@@ -28,9 +29,14 @@ const Header = () => {
             >
               <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                 <li className="nav-item">
-                  <a className="nav-link" aria-current="page" href="#">
+                  <NavLink className="nav-link" aria-current="page" to="/">
                     Home
-                  </a>
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink className="nav-link" aria-current="page" to="/cart">
+                    <i className="bi bi-cart"></i>
+                  </NavLink>
                 </li>
                 <li className="nav-item dropdown">
                   <a
@@ -40,7 +46,7 @@ const Header = () => {
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
                   >
-                   Admin Panel
+                    Admin Panel
                   </a>
                   <ul className="dropdown-menu">
                     <li>
