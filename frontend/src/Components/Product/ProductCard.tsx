@@ -59,8 +59,10 @@ const ProductCard = (props:Props) => {
             ></i>
             <div className="text-center">
               <p className="card-title m-0 text-success fs-3">
-                <Link to={`/productDetails/${props.product.id}`}
-                style={{textDecoration: "none", color:"gray"}}>
+                <Link
+                  to={`/productDetails/${props.product.id}`}
+                  style={{ textDecoration: "none", color: "gray" }}
+                >
                   {props.product.title}
                 </Link>
               </p>
@@ -72,7 +74,7 @@ const ProductCard = (props:Props) => {
                 {props.product.description}
               </p> */}
             <div className="row text-center">
-              <h4>€{props.product.price}</h4>
+              <h4>€{props.product.price.toLocaleString("en")}</h4>
             </div>
           </div>
         </div>
