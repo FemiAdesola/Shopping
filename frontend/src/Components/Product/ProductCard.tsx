@@ -7,18 +7,19 @@ interface Props {
 
 const ProductCard = (props:Props) => {
     return (
-      <div className="col-md-4 col-12 pt-4 ">
+      <div className=" productcard col-md-4 col-12 pt-4 ">
         <div
           className="card"
           style={{ boxShadow: "0 1px 7px 0 rgb(0 0 0 / 50%" }}
         >
           <div className="card-body pt-2">
-            <div className="row col-10 offset-1 p-4">
+            <div className="row col-10 offset-1 p-4 image ">
               <img
-                src={props.product.image}
-                className="w-50% mt-5 image-box"
-                style={{ borderRadius: "50%" }}
-                alt={props.product.title}
+                            src={props.product.image}
+                            className="w-100% mt-5 image-fluid"
+                            // style={{ borderRadius: "50%" }}
+                            alt={props.product.title}
+                            width="100 % "height="100%"
               />
             </div>
             {props.product.productType &&
@@ -29,6 +30,7 @@ const ProductCard = (props:Props) => {
                     position: "absolute",
                     top: "15px",
                     left: "15px",
+                    width: "50%",
                     padding: "5px 10px",
                     borderRadius: "3px",
                     outline: "none !important",
@@ -59,9 +61,9 @@ const ProductCard = (props:Props) => {
                 {props.product.category}
               </p>
             </div>
-            <p className="card-text" style={{ textAlign: "center" }}>
-              {props.product.description}
-            </p>
+            {/* <p className="card-text" style={{ textAlign: "center" }}>
+                {props.product.description}
+              </p> */}
             <div className="row text-center">
               <h4>€{props.product.price}</h4>
             </div>
