@@ -1,5 +1,5 @@
 import React from 'react';
-import {CartSummary} from "./index"
+import {CartPickUp, CartSummary} from "./index"
 
 const Cart = () => {
     return (
@@ -8,7 +8,7 @@ const Cart = () => {
            <CartSummary/>
         </div>
         <div className="col-lg-6 col-12 p-4 ">
-            User details
+            <CartPickUp/>
         </div>
       </div>
     );
