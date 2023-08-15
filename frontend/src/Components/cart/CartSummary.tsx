@@ -2,12 +2,46 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CartItemsType } from '../../types';
 import { RootState } from '../../Redux/store';
+import { removeItemFromCart, updateQuantity } from '../../Redux/cartSlice';
+import { useUpdateCartMutation } from '../../Apis/cartApi';
 
 const CartSummary = () => {
     const dispatch = useDispatch();
     const cartFromStore: CartItemsType[] = useSelector(
       (state: RootState) => state.cartStore.cartItems ?? []
     );
+    const [updateCart] = useUpdateCartMutation();
+    const handleQuantity = (
+      updateQuantityBy: number,
+      cartItem: CartItemsType
+    ) => {
+      if (
+          (updateQuantityBy == -1
+            && cartItem.quantity == 1) ||
+            updateQuantityBy == 0
+      ) {
+        //remove the item  from database, the method is from cartApi
+        updateCart({
+          productId: cartItem.product?.id,
+          updateQuantityBy: 0,
+          userId: "559a7266-4562-44a6-901d-5764a9949088",
+        });
+        dispatch(removeItemFromCart({ cartItem, quantity: 0 }));
+      } else {
+        //update the quantity with the new quantity
+        updateCart({
+          productId: cartItem.product?.id,
+          updateQuantityBy: updateQuantityBy,
+          userId: "559a7266-4562-44a6-901d-5764a9949088",
+        });
+        dispatch(
+          updateQuantity({
+            cartItem,
+            quantity: cartItem.quantity! + updateQuantityBy,
+          })
+        );
+      }
+    };
     return (
       <div className="container p-4 m-2">
         <h4 className="text-center text-success">Cart Summary</h4>
@@ -22,8 +56,8 @@ const CartSummary = () => {
               <img
                 src={cartItem.product?.image}
                 alt=""
-                    width={"60px"}
-                    height={"60px"}
+                width={"60px"}
+                height={"60px"}
                 className="rounded-circle"
               />
             </div>
@@ -36,7 +70,9 @@ const CartSummary = () => {
                 </h4>
               </div>
               <div className="flex-fill">
-                <h4 className="text-danger">${cartItem.product!.price.toLocaleString("en")}</h4>
+                <h4 className="text-danger">
+                  ${cartItem.product!.price.toLocaleString("en")}
+                </h4>
               </div>
               <div className="d-flex justify-content-between">
                 <div
@@ -49,6 +85,7 @@ const CartSummary = () => {
                   <span style={{ color: "rgba(22,22,22,.7)" }} role="button">
                     <i
                       className="bi bi-dash-circle-fill"
+                      onClick={() => handleQuantity(-1, cartItem)}
                     ></i>
                   </span>
                   <span>
@@ -57,12 +94,14 @@ const CartSummary = () => {
                   <span style={{ color: "rgba(22,22,22,.7)" }} role="button">
                     <i
                       className="bi bi-plus-circle-fill"
+                      onClick={() => handleQuantity(1, cartItem)}
                     ></i>
                   </span>
                 </div>
 
                 <button
                   className="btn btn-danger mx-1"
+                  onClick={() => handleQuantity(0, cartItem)}
                 >
                   Remove
                 </button>
