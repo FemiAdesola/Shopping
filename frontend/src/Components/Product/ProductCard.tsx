@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ProductType } from '../../types';
 import { Link } from 'react-router-dom';
 import { useUpdateCartMutation } from '../../Apis/cartApi';
+import { Loader } from '../common';
 
 interface Props {
   product: ProductType;
@@ -57,20 +58,32 @@ const ProductCard = (props: Props) => {
                   &nbsp; {props.product.productType}
                 </i>
               )}
-
-            <i
-              className="bi bi-cart-plus btn btn-outline-danger"
-              style={{
-                position: "absolute",
-                top: "15px",
-                right: "15px",
-                padding: "5px 10px",
-                borderRadius: "3px",
-                outline: "none !important",
-                cursor: "pointer",
-              }}
-              onClick={() => handleAddToCart(props.product.id)}
-            ></i>
+            {isAddingTocart ? (
+              <div
+                style={{
+                  position: "absolute",
+                  top: "15px",
+                  right: "15px",
+                }}
+              >
+               <Loader/>
+              </div>
+            ) : (
+              <i
+                className="bi bi-cart-plus btn btn-outline-danger"
+                style={{
+                  position: "absolute",
+                  top: "15px",
+                  right: "15px",
+                  padding: "5px 10px",
+                  borderRadius: "3px",
+                  outline: "none !important",
+                  cursor: "pointer",
+                }}
+                onClick={() => handleAddToCart(props.product.id)}
+              ></i>
+            )}
+            
             <div className="text-center">
               <p className="card-title m-0 text-success fs-3">
                 <Link

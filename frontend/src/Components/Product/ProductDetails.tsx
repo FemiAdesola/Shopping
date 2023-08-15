@@ -3,6 +3,7 @@ import { useParams, useNavigate} from 'react-router-dom';
 
 import { useGetProductByIdQuery } from '../../Apis/productApi';
 import { useUpdateCartMutation } from '../../Apis/cartApi';
+import { Loader, MainLoader } from '../common';
 
 // UserId = 559a7266-4562-44a6-901d-5764a9949088
 
@@ -84,12 +85,17 @@ const ProductDetails = () => {
                 </span>
                 <div className="row pt-4">
                   <div className="col-5">
-                    <button className="btn btn-success form-control"
-                    onClick={()=>handleAddToCart(data.result?.id)}>
-                      Add to Cart
-                    </button>
+                    {isAddingTocart ? (
+                      <button disabled className="btn btn-success form-control">
+                        <Loader />
+                      </button>
+                    ) : (
+                      <button className="btn btn-success form-control"
+                        onClick={() => handleAddToCart(data.result?.id)}>
+                        Add to Cart
+                      </button>
+                    )}
                   </div>
-
                   <div className="col-5 ">
                     <button
                       className="btn btn-secondary form-control"
@@ -120,7 +126,9 @@ const ProductDetails = () => {
             className="d-flex justify-content-center"
             style={{ width: "100%" }}
           >
-            <div>Loading....</div>
+              <div>
+                <MainLoader/>
+            </div>
           </div>
         )}
       </div>
