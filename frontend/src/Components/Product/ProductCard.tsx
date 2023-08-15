@@ -1,12 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ProductType } from '../../types';
 import { Link } from 'react-router-dom';
+import { useUpdateCartMutation } from '../../Apis/cartApi';
 
 interface Props {
   product: ProductType;
 }
 
-const ProductCard = (props:Props) => {
+const ProductCard = (props: Props) => {
+  const [isAddingTocart, setIsAddingToCart] = useState<boolean>(false);
+  const [updateCart] = useUpdateCartMutation();
+
+  const handleAddToCart = async (productId: number) => {
+    setIsAddingToCart(true);
+    const response = await updateCart({
+      productId: productId,
+      updateQuantityBy: 1,
+      userId: "559a7266-4562-44a6-901d-5764a9949088",
+    });
+    console.log(response);
+    setIsAddingToCart(false);
+  };
     return (
       <div className=" productcard col-md-4 col-12 pt-4 ">
         <div
@@ -19,7 +33,6 @@ const ProductCard = (props:Props) => {
                 <img
                   src={props.product.image}
                   className="w-100% mt-5 image-fluid"
-                  // style={{ borderRadius: "50%" }}
                   alt={props.product.title}
                   width="100 % "
                   height="100%"
@@ -56,6 +69,7 @@ const ProductCard = (props:Props) => {
                 outline: "none !important",
                 cursor: "pointer",
               }}
+              onClick={() => handleAddToCart(props.product.id)}
             ></i>
             <div className="text-center">
               <p className="card-title m-0 text-success fs-3">
@@ -70,9 +84,6 @@ const ProductCard = (props:Props) => {
                 {props.product.category}
               </p>
             </div>
-            {/* <p className="card-text" style={{ textAlign: "center" }}>
-                {props.product.description}
-              </p> */}
             <div className="row text-center">
               <h4>€{props.product.price.toLocaleString("en")}</h4>
             </div>
