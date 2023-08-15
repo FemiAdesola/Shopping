@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { useParams, useNavigate} from 'react-router-dom';
 
 import { useGetProductByIdQuery } from '../../Apis/productApi';
@@ -7,6 +7,16 @@ const ProductDetails = () => {
   const { productId } = useParams();
   const navigate = useNavigate();
   const { data, isLoading } = useGetProductByIdQuery(productId);
+  const [quantity, setQuantity] = useState(1);
+
+  const handleAddToCart = (counter: number) => {
+    let newQuantity = counter + quantity;
+    if (newQuantity == 0) {
+      newQuantity = 1;
+    }
+    setQuantity(newQuantity)
+    return;
+  }
   
     return (
       <div className="container pt-4 pt-md-5">
@@ -43,11 +53,13 @@ const ProductDetails = () => {
                   style={{ border: "1px solid #333", borderRadius: "30px" }}
                 >
                   <i
+                    onClick={() => handleAddToCart(-1)}
                     className="bi bi-dash p-1"
                     style={{ fontSize: "25px", cursor: "pointer" }}
                   ></i>
-                  <span className="h3 mt-3 px-3">quantity</span>
+                  <span className="h3 mt-3 px-3"> {quantity}</span>
                   <i
+                    onClick={() => handleAddToCart(+1)}
                     className="bi bi-plus p-1"
                     style={{ fontSize: "25px", cursor: "pointer" }}
                   ></i>
@@ -62,7 +74,8 @@ const ProductDetails = () => {
                   <div className="col-5 ">
                     <button
                       className="btn btn-secondary form-control"
-                      onClick={() => navigate(-1)}>
+                      onClick={() => navigate(-1)}
+                    >
                       Back to Home
                     </button>
                   </div>
