@@ -2,25 +2,33 @@ import React from 'react';
 import { useState, useEffect } from "react";
 import { ProductType } from '../../types';
 import  ProductCard  from './ProductCard';
+import { useGetProductsQuery } from '../../Apis/productApi';
+import { useDispatch } from 'react-redux';
+import { setProduct } from '../../Redux/productSlice';
 
 const ProductList = () => {
-    const [products, setProducts] = useState<ProductType[]>([]);
+  // const [products, setProducts] = useState<ProductType[]>([]);
+  const dispatch = useDispatch();
+  const { data, isLoading } = useGetProductsQuery(null);
 
-    useEffect(() => {
-      fetch("https://localhost:7099/api/v1/products")
-        .then((response) => response.json())
-        .then((data) => {
-          setProducts(data.result);
-        });
-    }, []);
-    return (
-      <div className="container row">
-        {products.length > 0 &&
-          products.map((product, index) => (
-            <ProductCard product={product} key={index} />
-          ))}
-      </div>
-    );
+  useEffect(() => {
+    if (!isLoading) {
+      dispatch(setProduct(data.result));
+    }
+  }, [isLoading]);
+
+  if (isLoading) {
+    return <div> Loading...</div>;
+  }
+  
+  return (
+    <div className="container row">
+      {data.result.length > 0 &&
+        data.result.map((product: ProductType, index: number) => (
+          <ProductCard product={product} key={index} />
+        ))}
+    </div>
+  );
 };
 
 export default ProductList;
