@@ -7,8 +7,9 @@ import { ProductDetails } from '../Components/Product/index';
 import { useDispatch } from 'react-redux';
 import { useGetCartsQuery } from '../Apis/cartApi';
 import { setCart } from '../Redux/cartSlice';
+import { Cart } from '../Components/cart';
 
-const  App = () => {
+function App() {
   const dispatch = useDispatch();
    const { data, isLoading } = useGetCartsQuery(
      "559a7266-4562-44a6-901d-5764a9949088"
@@ -29,6 +30,10 @@ const  App = () => {
           <Route
             path="/productDetails/:productId"
             element={<ProductDetails />}
+          ></Route>
+          <Route
+            path="/cart"
+            element={<Cart />}
           ></Route>
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
