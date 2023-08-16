@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Loader } from '../common';
 import { useSelector } from 'react-redux';
-import { CartItemsType } from '../../types';
+import { CartItemsType, userType } from '../../types';
 import { RootState } from '../../Redux/store';
 import { useNavigate } from 'react-router-dom';
 import { inputHelper } from '../Helper';
@@ -12,12 +12,17 @@ const CartPickUp = () => {
   const cartFromStore: CartItemsType[] = useSelector(
     (state: RootState) => state.cartStore.cartItems ?? []
   );
+
+    const userData: userType = useSelector(
+      (state: RootState) => state.userStore
+    );
+  
   let grandTotal = 0;
   let totalItems = 0;
   // user details for pick up
   const initialUserData = {
-    name: "",
-    email: "",
+    name: userData.fullName,
+    email: userData.email,
     phoneNumber: "",
   };
   // for getting total item and price
