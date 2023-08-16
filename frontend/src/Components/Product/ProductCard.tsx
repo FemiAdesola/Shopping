@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { ProductType } from '../../types';
+import { ProductType, apiResponse } from '../../types';
 import { Link } from 'react-router-dom';
 import { useUpdateCartMutation } from '../../Apis/cartApi';
 import { Loader } from '../common';
+import { toastNotification } from '../Helper';
 
 interface Props {
   product: ProductType;
@@ -14,12 +15,14 @@ const ProductCard = (props: Props) => {
 
   const handleAddToCart = async (productId: number) => {
     setIsAddingToCart(true);
-    const response = await updateCart({
+    const response: apiResponse = await updateCart({
       productId: productId,
       updateQuantityBy: 1,
       userId: "559a7266-4562-44a6-901d-5764a9949088",
     });
-    console.log(response);
+    if (response.data && response.data.isSuccess) {
+      toastNotification("Item added to cart successfully!");
+    }
     setIsAddingToCart(false);
   };
     return (

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Roles } from '../Utils/StaticDetails';
 import { useNavigate } from 'react-router-dom';
 import { useRegisterUserMutation } from '../Apis/userApi';
-import { inputHelper } from '../Components/Helper';
+import { inputHelper, toastNotification } from '../Components/Helper';
 import { apiResponse } from '../types';
 import { Loader } from '../Components/common';
 
@@ -34,10 +34,10 @@ const Register = () => {
       name: userInput.name,
     });
     if (response.data) {
-      console.log("Registeration successful! Please login to continue.");
+      toastNotification("Registeration successful! Please login to continue.");
       navigate("/login");
     } else if (response.error) {
-      console.log(response.error.data.errorMessages[0], "error");
+      toastNotification(response.error.data.errorMessages[0], "error");
     }
 
     setLoading(false);
@@ -97,7 +97,7 @@ const Register = () => {
             </div>
           </div>
           <div className="mt-5">
-            <button type="submit" className="btn btn-success">
+            <button type="submit" className="btn btn-success" disabled={loading}>
               Register
             </button>
           </div>

@@ -4,6 +4,8 @@ import { useParams, useNavigate} from 'react-router-dom';
 import { useGetProductByIdQuery } from '../../Apis/productApi';
 import { useUpdateCartMutation } from '../../Apis/cartApi';
 import { Loader, MainLoader } from '../common';
+import { apiResponse } from '../../types';
+import { toastNotification } from '../Helper';
 
 // UserId = 559a7266-4562-44a6-901d-5764a9949088
 
@@ -26,12 +28,14 @@ const ProductDetails = () => {
   
   const handleAddToCart = async (productId: number) => {
     setIsAddingToCart(true);
-    const response = await updateCart({
+    const response:apiResponse = await updateCart({
       productId: productId,
       updateQuantityBy: quantity,
       userId: "559a7266-4562-44a6-901d-5764a9949088",
     });
-    console.log(response);
+     if (response.data && response.data.isSuccess) {
+       toastNotification("Item added to cart successfully!");
+     }
     setIsAddingToCart(false);
   }
     
