@@ -33,7 +33,7 @@ const Header = () => {
               className="collapse navbar-collapse"
               id="navbarSupportedContent"
             >
-              <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+              <ul className="navbar-nav me-auto mb-2 mb-lg-0 w-100">
                 <li className="nav-item">
                   <NavLink className="nav-link" aria-current="page" to="/">
                     Home
@@ -41,9 +41,9 @@ const Header = () => {
                 </li>
                 <li className="nav-item">
                   <NavLink className="nav-link" aria-current="page" to="/cart">
-                    <i className="bi bi-cart text-success"> {" "}
-                      {cartFromStore?.length ?
-                        `(${cartFromStore.length})` : ""}
+                    <i className="bi bi-cart text-success">
+                      {" "}
+                      {cartFromStore?.length ? `(${cartFromStore.length})` : ""}
                     </i>
                   </NavLink>
                 </li>
@@ -75,6 +75,50 @@ const Header = () => {
                     </li>
                   </ul>
                 </li>
+                <div className="d-flex" style={{ marginLeft: "auto" }}>
+                  <li className="nav-item">
+                    <button
+                      className="nav-link active"
+                      style={{
+                        cursor: "pointer",
+                        background: "transparent",
+                        border: 0,
+                      }}
+                    >
+                      Welcome
+                    </button>
+                  </li>
+                  <li className="nav-item">
+                    <button
+                      className="btn btn-success btn-outlined rounded-pill text-white mx-2"
+                      style={{
+                        border: "none",
+                        height: "40px",
+                        width: "100px",
+                      }}
+                    >
+                      Logout
+                    </button>
+                  </li>
+                  <li className="nav-item text-white">
+                    <NavLink className="nav-link" to="/register">
+                      Register
+                    </NavLink>
+                  </li>
+                  <li className="nav-item text-white">
+                    <NavLink
+                      className="btn btn-success btn-outlined rounded-pill text-white mx-2"
+                      style={{
+                        border: "none",
+                        height: "40px",
+                        width: "100px",
+                      }}
+                      to="/login"
+                    >
+                      Login
+                    </NavLink>
+                  </li>
+                </div>
               </ul>
             </div>
           </div>

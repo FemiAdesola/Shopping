@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import { Footer, Header } from '../Components/Layout';
-import {Home, NotFound} from '../Pages/index';
+import {Home, Login, NotFound, Register} from '../Pages/index';
 import { ProductDetails } from '../Components/Product/index';
 import { useDispatch } from 'react-redux';
 import { useGetCartsQuery } from '../Apis/cartApi';
@@ -31,10 +31,9 @@ function App() {
             path="/productDetails/:productId"
             element={<ProductDetails />}
           ></Route>
-          <Route
-            path="/cart"
-            element={<Cart />}
-          ></Route>
+          <Route path="/cart" element={<Cart />}></Route>
+          <Route path="/register" element={<Register />}></Route>
+          <Route path="/login" element={<Login />}></Route>
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </div>
