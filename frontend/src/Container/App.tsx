@@ -11,6 +11,7 @@ import { setCart } from '../Redux/cartSlice';
 import { Cart } from '../Components/cart';
 import { userType } from '../types';
 import { setLoggedInUser } from '../Redux/userSlice';
+import { AccessDenied, AuthAdmin, AuthTest } from '../Auth';
 
 function App() {
   const dispatch = useDispatch();
@@ -45,6 +46,11 @@ function App() {
           <Route path="/cart" element={<Cart />}></Route>
           <Route path="/register" element={<Register />}></Route>
           <Route path="/login" element={<Login />}></Route>
+
+          <Route path="/authentication" element={<AuthTest />}></Route>
+          <Route path="/authorization" element={<AuthAdmin />}></Route>
+          <Route path="/accessDenied" element={<AccessDenied />}></Route>
+          
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </div>

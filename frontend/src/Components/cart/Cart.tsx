@@ -1,5 +1,6 @@
 import React from 'react';
 import {CartPickUp, CartSummary} from "./index"
+import { userAuth } from '../../HOC';
 
 const Cart = () => {
     return (
@@ -14,4 +15,4 @@ const Cart = () => {
     );
 };
 
-export default Cart;
+export default userAuth(Cart);
