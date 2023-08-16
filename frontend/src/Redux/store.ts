@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 
 import { productReducer } from "./productSlice";
-import { cartApi, productApi } from "../Apis";
+import { cartApi, productApi, userApi } from "../Apis";
 import { cartReducer } from "./cartSlice";
 
 const store = configureStore({
@@ -10,11 +10,13 @@ const store = configureStore({
     cartStore: cartReducer,
     [productApi.reducerPath]: productApi.reducer,
     [cartApi.reducerPath]: cartApi.reducer,
+    [userApi.reducerPath]: userApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
       .concat(productApi.middleware)
-      .concat(cartApi.middleware),
+      .concat(cartApi.middleware)
+      .concat(userApi.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
