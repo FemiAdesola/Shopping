@@ -1,12 +1,18 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import jwt_decode from "jwt-decode";
+import { useDispatch } from "react-redux";
+
+
 import { inputHelper } from '../Components/Helper';
 import { useLoginUserMutation } from '../Apis/userApi';
 import { Loader } from '../Components/common';
-import { useDispatch } from 'react-redux';
-import { apiResponse } from '../types';
+import { apiResponse, userType } from '../types';
+import { setLoggedInUser } from '../Redux/userSlice';
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [error, setError] = useState("");
   const [loginUser] = useLoginUserMutation();
   const [loading, setLoading] = useState(false);
@@ -32,7 +38,10 @@ const Login = () => {
     if (response.data) {
       console.log(response.data);
       const { token } = response.data.result;
+      const { fullName, id, email, role }: userType = jwt_decode(token); // for decoded token
       localStorage.setItem("token", token);
+      dispatch(setLoggedInUser({ fullName, id, email, role }));
+      navigate("/");
     } else if (response.error) {
       console.log(response.error.data.errorMessages[0], "error");
        setError(response.error.data.errorMessages[0]);
