@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import jwt_decode from "jwt-decode";
 
 import { Footer, Header } from '../Components/Layout';
@@ -12,12 +12,14 @@ import { Cart } from '../Components/cart';
 import { userType } from '../types';
 import { setLoggedInUser } from '../Redux/userSlice';
 import { AccessDenied, AuthAdmin, AuthTest } from '../Auth';
+import { RootState } from '../Redux/store';
 
 function App() {
   const dispatch = useDispatch();
-   const { data, isLoading } = useGetCartsQuery(
-     "559a7266-4562-44a6-901d-5764a9949088"
-   );
+    const userData: userType = useSelector(
+      (state: RootState) => state.userStore
+    );
+   const { data, isLoading } = useGetCartsQuery(userData.id);
   
    useEffect(() => {
      if (!isLoading && data) {

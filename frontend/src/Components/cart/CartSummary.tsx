@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { CartItemsType } from '../../types';
+import { CartItemsType, userType } from '../../types';
 import { RootState } from '../../Redux/store';
 import { removeItemFromCart, updateQuantity } from '../../Redux/cartSlice';
 import { useUpdateCartMutation } from '../../Apis/cartApi';
@@ -9,6 +9,9 @@ const CartSummary = () => {
     const dispatch = useDispatch();
     const cartFromStore: CartItemsType[] = useSelector(
       (state: RootState) => state.cartStore.cartItems ?? []
+    );
+    const userData: userType = useSelector(
+      (state: RootState) => state.userStore
     );
     const [updateCart] = useUpdateCartMutation();
     const handleQuantity = (
@@ -24,7 +27,7 @@ const CartSummary = () => {
         updateCart({
           productId: cartItem.product?.id,
           updateQuantityBy: 0,
-          userId: "559a7266-4562-44a6-901d-5764a9949088",
+          userId: userData.id,
         });
         dispatch(removeItemFromCart({ cartItem, quantity: 0 }));
       } else {
@@ -32,7 +35,7 @@ const CartSummary = () => {
         updateCart({
           productId: cartItem.product?.id,
           updateQuantityBy: updateQuantityBy,
-          userId: "559a7266-4562-44a6-901d-5764a9949088",
+          userId: userData.id,
         });
         dispatch(
           updateQuantity({

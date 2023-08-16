@@ -1,24 +1,34 @@
 import React, { useState } from 'react';
-import { ProductType, apiResponse } from '../../types';
-import { Link } from 'react-router-dom';
+import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+
+import { ProductType, apiResponse, userType } from '../../types';
 import { useUpdateCartMutation } from '../../Apis/cartApi';
 import { Loader } from '../common';
 import { toastNotification } from '../Helper';
+import { RootState } from '../../Redux/store';
 
 interface Props {
   product: ProductType;
 }
 
 const ProductCard = (props: Props) => {
+  const navigate = useNavigate();
   const [isAddingTocart, setIsAddingToCart] = useState<boolean>(false);
   const [updateCart] = useUpdateCartMutation();
 
+  const userData : userType = useSelector((state: RootState) => state.userStore);
+
   const handleAddToCart = async (productId: number) => {
+    if (!userData.id) {
+      navigate("/login");
+      return;
+    }
     setIsAddingToCart(true);
     const response: apiResponse = await updateCart({
       productId: productId,
       updateQuantityBy: 1,
-      userId: "559a7266-4562-44a6-901d-5764a9949088",
+      userId: userData.id,
     });
     if (response.data && response.data.isSuccess) {
       toastNotification("Item added to cart successfully!");
