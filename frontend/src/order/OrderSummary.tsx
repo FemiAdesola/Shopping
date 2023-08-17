@@ -23,13 +23,13 @@ const OrderSummary = ({ data, userInput }: orderSummaryType) => {
                         <div className="d-flex w-100 justify-content-between">
                           <p>{cartItem.product?.title}</p>
                           <p>
-                            €{cartItem.product?.price} x {cartItem.quantity} =
+                            € {cartItem.product?.price} x {cartItem.quantity}  = 
                           </p>
                         </div>
                         <p style={{ width: "70px", textAlign: "right" }}>
                           €
-                          {(cartItem.product?.price ?? 0) *
-                            (cartItem.quantity ?? 0)}
+                          {((cartItem.product?.price ?? 0) *
+                            (cartItem.quantity ?? 0)).toFixed(2)}
                         </p>
                       </div>
                     );
