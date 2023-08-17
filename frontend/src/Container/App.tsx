@@ -13,6 +13,7 @@ import { userType } from '../types';
 import { setLoggedInUser } from '../Redux/userSlice';
 import { AccessDenied, AuthAdmin, AuthTest } from '../Auth';
 import { RootState } from '../Redux/store';
+import { Payment } from '../Components/payment';
 
 function App() {
   const dispatch = useDispatch();
@@ -52,7 +53,9 @@ function App() {
           <Route path="/authentication" element={<AuthTest />}></Route>
           <Route path="/authorization" element={<AuthAdmin />}></Route>
           <Route path="/accessDenied" element={<AccessDenied />}></Route>
-          
+
+          <Route path="/payment" element={<Payment />}></Route>
+
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </div>
