@@ -1,4 +1,8 @@
 import OrderConfirmed from "./OrderConfirmed";
+import OrderList from "./OrderList";
 import OrderSummary from "./OrderSummary";
+import UserOrders from "./UserOrders";
 
-export { OrderSummary, OrderConfirmed };
+
+
+export { OrderSummary, OrderConfirmed, OrderList, UserOrders };

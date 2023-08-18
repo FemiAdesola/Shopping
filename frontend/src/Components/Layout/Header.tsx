@@ -57,8 +57,13 @@ const Header = () => {
                   <NavLink className="nav-link" aria-current="page" to="/cart">
                     <i className="bi bi-cart text-success">
                       {" "}
-                      {userData.id &&  `(${cartFromStore.length})`}
+                      {userData.id && `(${cartFromStore.length})`}
                     </i>
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink className="nav-link" aria-current="page" to="/order/userorders">
+                    User Orders
                   </NavLink>
                 </li>
                 {/* <li className="nav-item">

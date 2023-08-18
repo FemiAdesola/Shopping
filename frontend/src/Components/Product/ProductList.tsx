@@ -8,7 +8,6 @@ import { setProduct } from '../../Redux/productSlice';
 import { MainLoader } from '../common';
 
 const ProductList = () => {
-  // const [products, setProducts] = useState<ProductType[]>([]);
   const dispatch = useDispatch();
   const { data, isLoading } = useGetProductsQuery(null);
 

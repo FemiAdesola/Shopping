@@ -1,13 +1,18 @@
+import { PaymentStatus } from "../Utils/StaticDetails";
+import ProductType from "./product";
+
 export interface OrderType {
-  pickupName: string;
-  pickupPhoneNumber: string;
-  pickupEmail: string;
-  appUserId: string;
-  orderTotal: number;
-  stripePaymentIntentID: string;
-  status: string;
-  totalItems: number;
-  orderDetailsDTO: OrderDetailsDTO[];
+  orderId?: number;
+  pickupName?: string;
+  pickupPhoneNumber?: string;
+  pickupEmail?: string;
+  appUserId?: string;
+  orderTotal?: number;
+  orderDate?: Date ;
+  stripePaymentIntentID?: string;
+  status?: PaymentStatus;
+  totalItems?: number;
+  orderDetails?: OrderDetailType[];
 }
 
 export interface OrderDetailsDTO {
@@ -15,4 +20,19 @@ export interface OrderDetailsDTO {
   quantity: number;
   itemName: string;
   price: number;
+}
+
+export default interface OrderDetailType {
+  orderDetailId?: number;
+  orderHeaderId?: number;
+  menuItemId?: number;
+  menuItem?: ProductType;
+  quantity?: number;
+  itemName?: string;
+  price?: number;
+}
+
+export default interface OrderListType {
+  isLoading: boolean;
+  orderData: OrderType[];
 }
