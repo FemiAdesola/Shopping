@@ -9,10 +9,12 @@ import { CartItemsType, apiResponse, orderSummaryType } from '../../types';
 import { useCreateOrderMutation } from '../../Apis/orderApi';
 import { PaymentStatus } from '../../Utils/StaticDetails';
 import { OrderDetailsDTO } from '../../types/order';
+import { useNavigate } from 'react-router-dom';
 
 const PaymentForm = ({ data, userInput }: orderSummaryType) => {
   const stripe = useStripe();
   const elements = useElements();
+  const navigate = useNavigate();
   const [isProcessing, setIsProcessing] = useState(false);
   const [createOrder] = useCreateOrderMutation();
 
@@ -38,11 +40,11 @@ const PaymentForm = ({ data, userInput }: orderSummaryType) => {
       setIsProcessing(false);
     } else {
       console.log(result);
-      let grandTotal= 0;
+      let grandTotal = 0;
       let totalItems = 0;
-      
+
       const orderDetailsDTO: OrderDetailsDTO[] = [];
-     
+
       data.cartItems?.forEach((item: CartItemsType) => {
         const tempOrderDetail: any = {};
         tempOrderDetail["productId"] = item.product?.id;
@@ -67,13 +69,30 @@ const PaymentForm = ({ data, userInput }: orderSummaryType) => {
             ? PaymentStatus.CONFIRMED
             : PaymentStatus.PENDING,
       });
-      console.log(response);
+
+      if (response) {
+        if (response.data?.result.status === PaymentStatus.CONFIRMED) {
+          navigate(
+            `/order/orderconfirmed/${response.data.result.orderId}`
+          );
+        } else {
+          navigate("/failed");
+        }
+      }
     }
+    setIsProcessing(false);
   };
   return (
     <form onSubmit={handleSubmit}>
       <PaymentElement />
-      <button className="btn btn-success mt-5 w-100">Submit</button>
+      <button
+        disabled={!stripe || isProcessing}
+        className="btn btn-success mt-5 w-100"
+      >
+        <span id="button-text">
+          {isProcessing ? "Processing ... " : "Submit Order"}
+        </span>
+      </button>
     </form>
   );
 };
