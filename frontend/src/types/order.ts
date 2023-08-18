@@ -7,10 +7,10 @@ export interface OrderType {
   stripePaymentIntentID: string;
   status: string;
   totalItems: number;
-  orderDetailsDTO: OrderDetailsDto[];
+  orderDetailsDTO: OrderDetailsDTO[];
 }
 
-export interface OrderDetailsDto {
+export interface OrderDetailsDTO {
   productId: number;
   quantity: number;
   itemName: string;

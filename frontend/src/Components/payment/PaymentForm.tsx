@@ -8,6 +8,7 @@ import { toastNotification } from '../Helper';
 import { CartItemsType, apiResponse, orderSummaryType } from '../../types';
 import { useCreateOrderMutation } from '../../Apis/orderApi';
 import { PaymentStatus } from '../../Utils/StaticDetails';
+import { OrderDetailsDTO } from '../../types/order';
 
 const PaymentForm = ({ data, userInput }: orderSummaryType) => {
   const stripe = useStripe();
@@ -40,11 +41,11 @@ const PaymentForm = ({ data, userInput }: orderSummaryType) => {
       let grandTotal= 0;
       let totalItems = 0;
       
-      const orderDetailsDTO: any = [];
+      const orderDetailsDTO: OrderDetailsDTO[] = [];
      
       data.cartItems?.forEach((item: CartItemsType) => {
         const tempOrderDetail: any = {};
-        tempOrderDetail["menuItemId"] = item.product?.id;
+        tempOrderDetail["productId"] = item.product?.id;
         tempOrderDetail["quantity"] = item.quantity;
         tempOrderDetail["itemName"] = item.product?.title;
         tempOrderDetail["price"] = item.product?.price;
