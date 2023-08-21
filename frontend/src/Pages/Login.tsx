@@ -36,7 +36,6 @@ const Login = () => {
       password: userInput.password,
     });
     if (response.data) {
-      console.log(response.data);
       const { token } = response.data.result;
       const { fullName, id, email, role }: userType = jwt_decode(token); // for decoded token
       localStorage.setItem("token", token);
