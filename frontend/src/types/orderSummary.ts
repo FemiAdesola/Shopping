@@ -1,3 +1,4 @@
+import { PaymentStatus } from "../Utils/StaticDetails";
 import CartType from "./cart";
 
 export interface orderSummaryType {
@@ -7,7 +8,7 @@ export interface orderSummaryType {
     cartTotal?: number;
     userId?: string;
     stripePaymentIntentId?: string;
-    status?: string;
+    status?: PaymentStatus;
   };
   userInput: {
     name: string;

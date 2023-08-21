@@ -4,6 +4,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { RootState } from '../../Redux/store';
 import { CartItemsType, userType } from '../../types';
 import { initialUserStateData, setLoggedInUser } from '../../Redux/userSlice';
+import { Roles } from '../../Utils/StaticDetails';
 let logo = require("../../Assets/Images/computer.png");
 
 const Header = () => {
@@ -53,19 +54,49 @@ const Header = () => {
                     Home
                   </NavLink>
                 </li>
-                <li className="nav-item">
-                  <NavLink className="nav-link" aria-current="page" to="/cart">
-                    <i className="bi bi-cart text-success">
-                      {" "}
-                      {userData.id && `(${cartFromStore.length})`}
-                    </i>
-                  </NavLink>
-                </li>
-                <li className="nav-item">
-                  <NavLink className="nav-link" aria-current="page" to="/order/userorders">
-                    User Orders
-                  </NavLink>
-                </li>
+
+                {userData.role == Roles.ADMIN ? (
+                  <li className="nav-item dropdown">
+                    <a
+                      className="nav-link dropdown-toggle"
+                      href="/"
+                      role="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      Admin Panel
+                    </a>
+                    <ul className="dropdown-menu">
+                      <li
+                        className="dropdown-item"
+                        style={{ cursor: "pointer" }}
+                        onClick={() => navigate("order/userorders")}
+                      >
+                        User Orders
+                      </li>
+                      <li
+                        className="dropdown-item"
+                        style={{ cursor: "pointer" }}
+                        onClick={() => navigate("order/allorders")}
+                      >
+                        All Orders
+                      </li>
+                    </ul>
+                  </li>
+                ) : (
+                  <>
+                    <li className="nav-item">
+                      <NavLink
+                        className="nav-link"
+                        aria-current="page"
+                        to="/order/userorders"
+                      >
+                        User Orders
+                      </NavLink>
+                    </li>
+                  </>
+                )}
+
                 {/* <li className="nav-item">
                   <NavLink
                     className="nav-link"
@@ -84,33 +115,14 @@ const Header = () => {
                     Admin
                   </NavLink>
                 </li> */}
-                <li className="nav-item dropdown">
-                  <a
-                    className="nav-link dropdown-toggle"
-                    href="#"
-                    role="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    Admin Panel
-                  </a>
-                  <ul className="dropdown-menu">
-                    <li>
-                      <a className="dropdown-item" href="#">
-                        Action
-                      </a>
-                    </li>
-                    <li>
-                      <a className="dropdown-item" href="#">
-                        Another action
-                      </a>
-                    </li>
-                    <li>
-                      <a className="dropdown-item" href="#">
-                        Something else here
-                      </a>
-                    </li>
-                  </ul>
+
+                <li className="nav-item">
+                  <NavLink className="nav-link" aria-current="page" to="/cart">
+                    <i className="bi bi-cart text-success">
+                      {" "}
+                      {userData.id && `(${cartFromStore.length})`}
+                    </i>
+                  </NavLink>
                 </li>
                 <div className="d-flex" style={{ marginLeft: "auto" }}>
                   {userData.id && (
