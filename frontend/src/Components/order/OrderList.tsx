@@ -1,10 +1,12 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { Loader } from "../../Components/common";
 import { OrderType } from "../../types/order";
 import OrderListType from '../../types/order';
 
 const OrderList = ({ isLoading, orderData }: OrderListType) => {
+  const navigate = useNavigate();
   return (
     <>
       {isLoading && <Loader />}
@@ -36,7 +38,14 @@ const OrderList = ({ isLoading, orderData }: OrderListType) => {
                   </div>
                   <div className="col-1"></div>
                   <div className="col-1">
-                    <button className="btn btn-success">Details</button>
+                    <button
+                      className="btn btn-success"
+                      onClick={() =>
+                        navigate("/order/orderDetails/" + orderItem.orderId)
+                      }
+                    >
+                      Details
+                    </button>
                   </div>
                 </div>
               );

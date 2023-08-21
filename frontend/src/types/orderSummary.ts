@@ -6,7 +6,8 @@ export interface orderSummaryType {
     cartItems?: CartType[];
     cartTotal?: number;
     userId?: string;
-    stripePaymentIntentId: string;
+    stripePaymentIntentId?: string;
+    status?: string;
   };
   userInput: {
     name: string;
