@@ -14,7 +14,7 @@ import { setLoggedInUser } from '../Redux/userSlice';
 import { AccessDenied, AuthAdmin, AuthTest } from '../Auth';
 import { RootState } from '../Redux/store';
 import { Payment } from '../Components/payment';
-import { OrderConfirmed, OrderList, UserOrders } from '../order';
+import { OrderConfirmed, OrderList, UserOrders } from"../Components/order";
 
 function App() {
   const dispatch = useDispatch();

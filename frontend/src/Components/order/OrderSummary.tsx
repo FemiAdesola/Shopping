@@ -1,5 +1,5 @@
 import React from 'react';
-import { CartItemsType, orderSummaryType } from '../types';
+import { CartItemsType, orderSummaryType } from '../../types';
 
 const OrderSummary = ({ data, userInput }: orderSummaryType) => {
   return (

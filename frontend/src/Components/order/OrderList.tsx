@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { Loader } from "../Components/common";
-import { OrderType } from "../types/order";
-import OrderListType from '../types/order';
+import { Loader } from "../../Components/common";
+import { OrderType } from "../../types/order";
+import OrderListType from '../../types/order';
 
 const OrderList = ({ isLoading, orderData }: OrderListType) => {
   return (

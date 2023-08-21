@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { userAuth } from '../HOC';
+import { userAuth } from '../../HOC';
 import { useSelector } from 'react-redux';
-import { RootState } from '../Redux/store';
-import { useGetAllOrdersQuery } from "../Apis/orderApi";
+import { RootState } from '../../Redux/store';
+import { useGetAllOrdersQuery } from "../../Apis/orderApi";
 import OrderList from './OrderList';
-import { Loader } from '../Components/common';
+import { Loader } from '../../Components/common';
 
 
 const UserOrders = () => {
