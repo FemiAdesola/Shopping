@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Loader } from "../../Components/common";
 import { OrderType } from "../../types/order";
 import OrderListType from '../../types/order';
+import { statusColor } from '../Helper';
 
 const OrderList = ({ isLoading, orderData }: OrderListType) => {
   const navigate = useNavigate();
@@ -21,9 +22,11 @@ const OrderList = ({ isLoading, orderData }: OrderListType) => {
               <div className="col-1">Total</div>
               <div className="col-1">Items</div>
               <div className="col-2">Date</div>
+              <div className="col-2">Status</div>
               <div className="col-1"></div>
             </div>
             {orderData!.map((orderItem: OrderType) => {
+              const colorStatus = statusColor(orderItem.status!);
               return (
                 <div className="row border" key={orderItem.orderId}>
                   <div className="col-1">{orderItem.orderId}</div>
@@ -36,7 +39,11 @@ const OrderList = ({ isLoading, orderData }: OrderListType) => {
                   <div className="col-2">
                     {new Date(orderItem.orderDate!).toLocaleDateString()}
                   </div>
-                  <div className="col-1"></div>
+                  <div className="col-2">
+                    <span className={`badge bg-${colorStatus}`}>
+                      {orderItem.status}
+                    </span>
+                  </div>
                   <div className="col-1">
                     <button
                       className="btn btn-success"

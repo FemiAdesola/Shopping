@@ -2,10 +2,24 @@ import React from 'react';
 import { CartItemsType, orderSummaryType } from '../../types';
 import statusColor from '../Helper/statusColor';
 import { useNavigate } from 'react-router-dom';
+import { PaymentStatus, Roles } from '../../Utils/StaticDetails';
+import { RootState } from '../../Redux/store';
+import { useSelector } from 'react-redux';
 
 const OrderSummary = ({ data, userInput }: orderSummaryType) => {
   const colorStatus = statusColor(data.status!)
   const navigate = useNavigate();
+  const userInfo = useSelector((state: RootState) => state.userStore);
+
+  const statusMessage: any =
+    data.status! === PaymentStatus.CONFIRMED
+      ? { color: "info", value: PaymentStatus.BEING_COOKED }
+      : data.status! === PaymentStatus.BEING_COOKED
+      ? { color: "warning", value: PaymentStatus.READY_FOR_PICKUP }
+      : data.status! === PaymentStatus.READY_FOR_PICKUP && {
+          color: "success",
+          value: PaymentStatus.COMPLETED,
+        };
   return (
     <div>
       <div className="d-flex justify-content-between align-items-center">
@@ -50,6 +64,22 @@ const OrderSummary = ({ data, userInput }: orderSummaryType) => {
         <button className="btn btn-secondary" onClick={() => navigate(-1)}>
           Back to Orders
         </button>
+        {userInfo.role == Roles.ADMIN && (
+          <div className="d-flex">
+            {data.status! !== PaymentStatus.CANCELLED &&
+              data.status! !== PaymentStatus.COMPLETED && (
+                <button className="btn btn-danger mx-2">
+                  Cancel
+                </button>
+              )}
+            <button
+              className={`btn btn-${statusMessage.color}`}
+              // onClick={handleNextStatus}
+            >
+              {statusMessage.value}
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
