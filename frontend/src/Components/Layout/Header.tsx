@@ -70,6 +70,13 @@ const Header = () => {
                       <li
                         className="dropdown-item"
                         style={{ cursor: "pointer" }}
+                        onClick={() => navigate("product/productitemlist")}
+                      >
+                      Product Item List
+                      </li>
+                      <li
+                        className="dropdown-item"
+                        style={{ cursor: "pointer" }}
                         onClick={() => navigate("order/userOrders")}
                       >
                         User Orders

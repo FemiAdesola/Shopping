@@ -6,7 +6,7 @@ import OrderList from "./OrderList";
 import { MainLoader } from "../../Components/common";
 
 const AllOrders = () => {
-   const { data, isLoading } = useGetAllOrdersQuery("");
+   const { data, isLoading } = useGetAllOrdersQuery(null);
 //    console.log(data.result);
    return (
      <>

@@ -5,7 +5,7 @@ import jwt_decode from "jwt-decode";
 
 import { Footer, Header } from '../Components/Layout';
 import {Home, Login, NotFound, Register} from '../Pages/index';
-import { ProductDetails } from '../Components/Product/index';
+import { ProductDetails, ProductItemList } from '../Components/Product/index';
 import { useGetCartsQuery } from '../Apis/cartApi';
 import { setCart } from '../Redux/cartSlice';
 import { Cart } from '../Components/cart';
@@ -47,16 +47,17 @@ function App() {
             path="/productDetails/:productId"
             element={<ProductDetails />}
           ></Route>
+          <Route
+            path="/product/productitemlist"
+            element={<ProductItemList />}
+          />
           <Route path="/cart" element={<Cart />}></Route>
           <Route path="/register" element={<Register />}></Route>
           <Route path="/login" element={<Login />}></Route>
-
           <Route path="/authentication" element={<AuthTest />}></Route>
           <Route path="/authorization" element={<AuthAdmin />}></Route>
           <Route path="/accessDenied" element={<AccessDenied />}></Route>
-
           <Route path="/payment" element={<Payment />}></Route>
-
           <Route
             path="order/orderconfirmed/:id"
             element={<OrderConfirmed />}
@@ -65,9 +66,8 @@ function App() {
             path="order/orderDetails/:id"
             element={<OrderDetails />}
           ></Route>
-          <Route path="/order/userOrders" element={<UserOrders />}/>
-          <Route path="/order/allOrders" element={<AllOrders />}/>
-
+          <Route path="/order/userOrders" element={<UserOrders />} />
+          <Route path="/order/allOrders" element={<AllOrders />} />
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </div>
