@@ -5,7 +5,7 @@ import jwt_decode from "jwt-decode";
 
 import { Footer, Header } from '../Components/Layout';
 import {Home, Login, NotFound, Register} from '../Pages/index';
-import { ProductDetails, ProductItemList } from '../Components/Product/index';
+import { ProductDetails, ProductItemList, ProductUpsert } from '../Components/Product/index';
 import { useGetCartsQuery } from '../Apis/cartApi';
 import { setCart } from '../Redux/cartSlice';
 import { Cart } from '../Components/cart';
@@ -50,6 +50,14 @@ function App() {
           <Route
             path="/product/productitemlist"
             element={<ProductItemList />}
+          />
+          <Route
+            path="/product/productupsert"
+            element={<ProductUpsert />}
+          />
+          <Route
+            path="/product/productupsert/:id"
+            element={<ProductUpsert />}
           />
           <Route path="/cart" element={<Cart />}></Route>
           <Route path="/register" element={<Register />}></Route>

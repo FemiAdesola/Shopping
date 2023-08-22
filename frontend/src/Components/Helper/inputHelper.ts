@@ -2,7 +2,7 @@ import React from 'react';
 
 const inputHelper = (
   e: React.ChangeEvent<
-    HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement | HTMLTextAreaElement
   >,
   data: any
 ) => {
