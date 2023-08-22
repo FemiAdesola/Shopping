@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { MainLoader } from '../common';
 import { useNavigate } from 'react-router-dom';
-import { inputHelper } from '../Helper';
+import { inputHelper, toastNotification } from '../Helper';
 
 const productData = {
   title: "",
@@ -14,6 +14,8 @@ const productData = {
 const ProductUpsert = () => {
     const navigate = useNavigate();
     const [productInput, setProductInput] = useState(productData);
+    const [imageToStore, setImageToStore] = useState<any>();
+    const [imageToDisplay, setImageToDisplay] = useState<string>("");
 
       const handleProductInput = (
         event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
@@ -22,6 +24,37 @@ const ProductUpsert = () => {
         setProductInput(receiveData);
       };
 
+    // for isner file or image
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files && e.target.files[0];
+        if (file) {
+            const imgType = file.type.split("/")[1];
+            const validImgTypes = ["jpeg", "jpg", "png"];
+
+            const isImageTypeValid = validImgTypes.filter((e) => {
+                return e === imgType;
+            });
+            if (file.size > 1000 * 1024) {
+              setImageToStore("");
+              toastNotification("File Must be less then 1 MB", "error");
+              return;
+            } else if (isImageTypeValid.length === 0) {
+              setImageToStore("");
+              toastNotification("File Must be in jpeg, jpg or png", "error");
+              return;
+            }
+
+            // message needed to upload the file
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            setImageToStore(file);
+            reader.onload = (event) => {
+              const imgUrl = event.target?.result as string;
+              setImageToDisplay(imgUrl);
+            };
+        }
+    }
+    //
     return (
       <div className="container border mt-5 p-5 bg-light">
         <h3 className=" px-2 text-success">
@@ -76,6 +109,7 @@ const ProductUpsert = () => {
               />
               <input
                 type="file"
+                onChange={handleFileChange}
                 className="form-control mt-3"
               />
               <div className="row">
@@ -99,9 +133,9 @@ const ProductUpsert = () => {
             </div>
             <div className="col-md-5 text-center">
               <img
-                src={"imageToDisplay"}
+                src={imageToDisplay}
                 style={{ width: "100%", borderRadius: "30px" }}
-                alt=""
+                alt={imageToDisplay}
               />
             </div>
           </div>
