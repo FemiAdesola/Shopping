@@ -12,15 +12,44 @@ export const productApi = createApi({
       }),
       providesTags: ["products"],
     }),
-      getProductById: builder.query({
+    getProductById: builder.query({
       query: (id) => ({
         url: `products/${id}`,
         method: "GET",
       }),
       providesTags: ["products"],
     }),
+    createProduct: builder.mutation({
+      query: (data) => ({
+        url: "products",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["products"],
+    }),
+    updateProduct: builder.mutation({
+      query: ({ data, id }) => ({
+        url: "products/" + id,
+        method: "PUT",
+        body: data,
+      }),
+      invalidatesTags: ["products"],
+    }),
+    deleteProduct: builder.mutation({
+      query: (id) => ({
+        url: "products/" + id,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["products"],
+    }),
   }),
 });
 
-export const { useGetProductsQuery, useGetProductByIdQuery } = productApi;
+export const {
+  useGetProductsQuery,
+  useGetProductByIdQuery,
+  useCreateProductMutation,
+  useUpdateProductMutation,
+  useDeleteProductMutation,
+} = productApi;
 export default productApi;
