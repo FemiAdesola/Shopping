@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MainLoader } from "../common";
 import { useNavigate, useParams } from "react-router-dom";
 import { inputHelper, toastNotification } from "../Helper";
@@ -26,6 +26,20 @@ const ProductUpsert = () => {
   const [createProduct] = useCreateProductMutation();
   const [updateProduct] = useUpdateProductMutation();
   const { data } = useGetProductByIdQuery(id);
+
+   useEffect(() => {
+     if (data && data.result) {
+       const productData = {
+         title: data.result.title,
+         description: data.result.description,
+         productType: data.result.productType,
+         category: data.result.category,
+         price: data.result.price,
+       };
+       setProductInput(productData);
+       setImageToDisplay(data.result.image);
+     }
+   }, [data]);
 
   const handleProductInput = (
     event: React.ChangeEvent<
@@ -97,6 +111,7 @@ const ProductUpsert = () => {
   //
   return (
     <div className="container border mt-5 p-5 bg-light">
+      {loading && <MainLoader />}
       <h3 className=" px-2 text-success"></h3>
       <form method="post" encType="multipart/form-data" onSubmit={handleSubmit}>
         <div className="row mt-3">
@@ -134,7 +149,7 @@ const ProductUpsert = () => {
               value={productInput.category}
               onChange={handleProductInput}
             />
-            
+           
             <input
               type="number"
               className="form-control mt-3"
