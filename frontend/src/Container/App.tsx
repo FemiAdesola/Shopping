@@ -14,7 +14,7 @@ import { setLoggedInUser } from '../Redux/userSlice';
 import { AccessDenied, AuthAdmin, AuthTest } from '../Auth';
 import { RootState } from '../Redux/store';
 import { Payment } from '../Components/payment';
-import { OrderConfirmed, OrderDetails, OrderList, UserOrders } from"../Components/order";
+import { AllOrders, OrderConfirmed, OrderDetails, OrderList, UserOrders } from"../Components/order";
 
 function App() {
   const dispatch = useDispatch();
@@ -65,7 +65,8 @@ function App() {
             path="order/orderDetails/:id"
             element={<OrderDetails />}
           ></Route>
-          <Route path="order/Userorders" element={<UserOrders />}></Route>
+          <Route path="/order/userOrders" element={<UserOrders />}/>
+          <Route path="/order/allOrders" element={<AllOrders />}/>
 
           <Route path="*" element={<NotFound />}></Route>
         </Routes>

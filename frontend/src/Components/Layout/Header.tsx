@@ -70,14 +70,14 @@ const Header = () => {
                       <li
                         className="dropdown-item"
                         style={{ cursor: "pointer" }}
-                        onClick={() => navigate("order/userorders")}
+                        onClick={() => navigate("order/userOrders")}
                       >
                         User Orders
                       </li>
                       <li
                         className="dropdown-item"
                         style={{ cursor: "pointer" }}
-                        onClick={() => navigate("order/allorders")}
+                        onClick={() => navigate("order/allOrders")}
                       >
                         All Orders
                       </li>
@@ -89,7 +89,7 @@ const Header = () => {
                       <NavLink
                         className="nav-link"
                         aria-current="page"
-                        to="/order/userorders"
+                        to="/order/userOrders"
                       >
                         User Orders
                       </NavLink>

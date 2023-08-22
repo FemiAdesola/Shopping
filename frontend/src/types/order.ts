@@ -7,8 +7,9 @@ export interface OrderType {
   pickupPhoneNumber?: string;
   pickupEmail?: string;
   appUserId?: string;
+  user?: any;
   orderTotal?: number;
-  orderDate?: Date ;
+  orderDate?: Date;
   stripePaymentIntentID?: string;
   status?: PaymentStatus;
   totalItems?: number;

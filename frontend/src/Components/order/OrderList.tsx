@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Loader } from "../../Components/common";
+import { MainLoader } from "../../Components/common";
 import { OrderType } from "../../types/order";
 import OrderListType from '../../types/order';
 import { statusColor } from '../Helper';
@@ -10,7 +10,7 @@ const OrderList = ({ isLoading, orderData }: OrderListType) => {
   const navigate = useNavigate();
   return (
     <>
-      {isLoading && <Loader />}
+      {isLoading && <MainLoader />}
       {!isLoading && (
         <div className="table p-5">
           <h1 className="text-success"> Orders List </h1>
@@ -40,7 +40,7 @@ const OrderList = ({ isLoading, orderData }: OrderListType) => {
                     {new Date(orderItem.orderDate!).toLocaleDateString()}
                   </div>
                   <div className="col-2">
-                    <span className={`badge bg-${colorStatus}`}>
+                    <span className={` badge rounded-pill bg-${colorStatus}`}>
                       {orderItem.status}
                     </span>
                   </div>
