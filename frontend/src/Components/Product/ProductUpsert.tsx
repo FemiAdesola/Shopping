@@ -27,19 +27,19 @@ const ProductUpsert = () => {
   const [updateProduct] = useUpdateProductMutation();
   const { data } = useGetProductByIdQuery(id);
 
-   useEffect(() => {
-     if (data && data.result) {
-       const productData = {
-         title: data.result.title,
-         description: data.result.description,
-         productType: data.result.productType,
-         category: data.result.category,
-         price: data.result.price,
-       };
-       setProductInput(productData);
-       setImageToDisplay(data.result.image);
-     }
-   }, [data]);
+  useEffect(() => {
+    if (data && data.result) {
+      const productData = {
+        title: data.result.title,
+        description: data.result.description,
+        productType: data.result.productType,
+        category: data.result.category,
+        price: data.result.price,
+      };
+      setProductInput(productData);
+      setImageToDisplay(data.result.image);
+    }
+  }, [data]);
 
   const handleProductInput = (
     event: React.ChangeEvent<
@@ -64,16 +64,26 @@ const ProductUpsert = () => {
     formData.append("ProductType", productInput.productType ?? "");
     formData.append("Category", productInput.category);
     formData.append("Price", productInput.price);
+
     if (imageToDisplay) formData.append("File", imageToStore);
 
+    let response;
 
-    const response = await createProduct(formData);
-    if (response) {
-      setLoading(false);
-      navigate("/Product/productitemlist")
+    if (id) {
+      //update
+      formData.append("Id", id);
+      response = await updateProduct({ data: formData, id });
+      toastNotification("Product Item updated successfully", "success");
+    } else {
+      //create
+      response = await createProduct(formData);
+      toastNotification("Product Item created successfully", "success");
     }
 
-
+    if (response) {
+      setLoading(false);
+      navigate("/Product/productitemlist");
+    }
 
     setLoading(false);
   };
@@ -112,7 +122,9 @@ const ProductUpsert = () => {
   return (
     <div className="container border mt-5 p-5 bg-light">
       {loading && <MainLoader />}
-      <h3 className=" px-2 text-success"></h3>
+      <h3 className=" px-2 text-success">
+        {id ? "Edit Product Item" : "Add New Product Item"}
+      </h3>
       <form method="post" encType="multipart/form-data" onSubmit={handleSubmit}>
         <div className="row mt-3">
           <div className="col-md-7">
@@ -149,7 +161,13 @@ const ProductUpsert = () => {
               value={productInput.category}
               onChange={handleProductInput}
             />
-           
+            {/* <select
+              className="form-control mt-3 form-select"
+              placeholder="Enter Category"
+              name="category"
+              value={productInput.category}
+              onChange={handleProductInput}
+            ></select> */}
             <input
               type="number"
               className="form-control mt-3"
@@ -170,16 +188,16 @@ const ProductUpsert = () => {
                   type="submit"
                   className="btn btn-success form-control mt-3"
                 >
-                  Submit
+                  {id ? "Update" : "Create"}
                 </button>
               </div>
               <div className="col-6">
-                <a
+                <button
                   onClick={() => navigate("/product/productitemlist")}
                   className="btn btn-secondary form-control mt-3"
                 >
                   Back to Product Items
-                </a>
+                </button>
               </div>
             </div>
           </div>

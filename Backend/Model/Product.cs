@@ -9,7 +9,7 @@ namespace Backend.Model
         [Range(1,int.MaxValue)]
         public double Price { get; set; }
         public string Description { get; set; } = null!;
-        public string Image { get; set; } = null!;
+        public string? Image { get; set; }
         public string Category { get; set; } = default!;
         public string ProductType { get; set; } = default!;
     }
