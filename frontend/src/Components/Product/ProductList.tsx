@@ -20,26 +20,6 @@ const ProductList = () => {
     (state: RootState) => state.searchStore.search
   );
 
-  const handleCategoryClick = (i: number) => {
-    const buttons = document.querySelectorAll(".custom-buttons");
-    let localCategory;
-    buttons.forEach((button, index) => {
-      if (index === i) {
-        button.classList.add("active");
-        if (index === 0) {
-          localCategory = "All";
-        } else {
-          localCategory = categoryList[index];
-        }
-        setSelectedCategory(localCategory);
-        const dataArray = handleFilters(localCategory, searchValue);
-        setProducts(dataArray);
-      } else {
-        button.classList.remove("active");
-      }
-    });
-  };
-
   useEffect(() => {
     if (data && data.result) {
       // dispatch(setProduct(data.result));
@@ -63,11 +43,36 @@ const ProductList = () => {
     }
   }, [isLoading]);
 
-  const handleFilters = (
-    search: string,
-    category: string
-  ) => {
-    let searchArray = [...data.result];
+  const handleCategoryClick = (i: number) => {
+    const buttons = document.querySelectorAll(".custom-buttons");
+    let localCategory;
+    buttons.forEach((button, index) => {
+      if (index === i) {
+        button.classList.add("active");
+        if (index === 0) {
+          localCategory = "All";
+        } else {
+          localCategory = categoryList[index];
+        }
+        setSelectedCategory(localCategory);
+        const dataArray = handleFilters(localCategory, searchValue);
+        setProducts(dataArray);
+      } else {
+        button.classList.remove("active");
+      }
+    });
+  };
+
+  const handleFilters = (search: string, category: string) => {
+    // let searchArray = [...data.result];
+    let searchArray =
+      category === "All"
+        ? [...data.result]
+        : data.result.filter(
+            (item: ProductType) =>
+              item.category=== category.toUpperCase()
+          );
+
     //search functionality
     if (search) {
       const newSearchArray = [...searchArray];

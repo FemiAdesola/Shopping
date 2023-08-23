@@ -10,14 +10,14 @@ import {
 import { Categories } from "../../Utils/StaticDetails";
 
 const CategoryType = [
-  Categories.Shoes,
-  Categories.Book,
-  Categories.Bag,
-  Categories.Vehicle,
-  Categories.Electronics,
-  Categories.Furniture,
-  Categories.Cloth,
-  Categories.Others
+  Categories.SHOES,
+  Categories.BOOK,
+  Categories.BAG,
+  Categories.VEHICLE,
+  Categories.ELECTRONICS,
+  Categories.FURNITURE,
+  Categories.CLOTH,
+  Categories.OTHERS
   ,
 ];
 

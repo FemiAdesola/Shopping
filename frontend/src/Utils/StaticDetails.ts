@@ -15,12 +15,12 @@ export enum PaymentStatus {
 
 
 export enum Categories {
-Shoes = "Shoes",
-Book = "Book",
-Electronics = "Electronics",
-Furniture = "Furniture",
-Cloth = "Cloth",
-Vehicle = "Vehicle",
-Bag ="Bag",
-Others = "Others",
+  SHOES = "Shoes",
+  BOOK = "Book",
+  ELECTRONICS = "Electronics",
+  FURNITURE = "Furniture",
+  CLOTH = "Cloth",
+  VEHICLE = "Vehicle",
+  BAG = "Bag",
+  OTHERS = "Others",
 }
