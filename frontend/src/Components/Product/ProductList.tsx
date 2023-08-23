@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setProduct } from "../../Redux/productSlice";
 import { MainLoader } from "../common";
 import { RootState } from "../../Redux/store";
+import { SortTypes } from "../../Utils/StaticDetails";
 
 const ProductList = () => {
   const dispatch = useDispatch();
@@ -15,15 +16,27 @@ const ProductList = () => {
 
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [categoryList, setCategoryList] = useState([""]);
-
-  const searchValue = useSelector(
+  const [sortName, setSortName] = useState(SortTypes.NAME_A_Z);
+  
+  const sortOptions: Array<SortTypes> = [
+    SortTypes.PRICE_LOW_HIGH,
+    SortTypes.PRICE_HIGH_LOW,
+    SortTypes.NAME_A_Z,
+    SortTypes.NAME_Z_A,
+  ];
+  
+  const searchValue: any = useSelector(
     (state: RootState) => state.searchStore.search
   );
 
   useEffect(() => {
     if (data && data.result) {
       // dispatch(setProduct(data.result));
-      const searchProductArray = handleFilters(selectedCategory, searchValue);
+      const searchProductArray = handleFilters(
+        sortName,
+        selectedCategory,
+        searchValue
+      );
       setProducts(searchProductArray);
     }
   }, [searchValue]);
@@ -43,6 +56,16 @@ const ProductList = () => {
     }
   }, [isLoading]);
 
+  const handleSortClick = (i: number) => {
+    setSortName(sortOptions[i]);
+    const tempArray = handleFilters(
+      sortOptions[i],
+      selectedCategory,
+      searchValue
+    );
+    setProducts(tempArray);
+  };
+
   const handleCategoryClick = (i: number) => {
     const buttons = document.querySelectorAll(".custom-buttons");
     let localCategory;
@@ -55,33 +78,58 @@ const ProductList = () => {
           localCategory = categoryList[index];
         }
         setSelectedCategory(localCategory);
-        const dataArray = handleFilters(localCategory, searchValue);
-        setProducts(dataArray);
+        const tempArray = handleFilters(sortName, localCategory, searchValue);
+        setProducts(tempArray);
       } else {
         button.classList.remove("active");
       }
     });
   };
 
-  const handleFilters = (search: string, category: string) => {
-    // let searchArray = [...data.result];
-    let searchArray =
+  const handleFilters = (
+    sortType: SortTypes,
+    category: string,
+    search: string
+  ) => {
+    let tempArray =
       category === "All"
         ? [...data.result]
         : data.result.filter(
-            (item: ProductType) =>
-              item.category=== category.toUpperCase()
-          );
+          (item: ProductType) =>
+            item.category.toUpperCase() === category.toUpperCase()
+        );
 
     //search functionality
     if (search) {
-      const newSearchArray = [...searchArray];
-      searchArray = newSearchArray.filter((item: ProductType) =>
+      const tempArray2 = [...tempArray];
+      tempArray = tempArray2.filter((item: ProductType) =>
         item.title.toUpperCase().includes(search.toUpperCase())
       );
     }
-    return searchArray;
-  };
+
+    //sort
+    if (sortType === SortTypes.PRICE_LOW_HIGH) {
+      tempArray.sort((a: ProductType, b: ProductType) => a.price - b.price);
+    }
+    if (sortType === SortTypes.PRICE_HIGH_LOW) {
+      tempArray.sort((a: ProductType, b: ProductType) => b.price - a.price);
+    }
+    if (sortType === SortTypes.NAME_A_Z) {
+      tempArray.sort(
+        (a: ProductType, b: ProductType) =>
+          a.title.toUpperCase().charCodeAt(0) -
+          b.title.toUpperCase().charCodeAt(0)
+      );
+    }
+    if (sortType === SortTypes.NAME_Z_A) {
+      tempArray.sort(
+        (a: ProductType, b: ProductType) =>
+          b.title.toUpperCase().charCodeAt(0) -
+          a.title.toUpperCase().charCodeAt(0)
+      );
+    }
+    return tempArray;
+  }
 
   if (isLoading) {
     return (
@@ -112,6 +160,27 @@ const ProductList = () => {
               </button>
             </li>
           ))}
+          <li className="nav-item dropdown" style={{ marginLeft: "auto" }}>
+            <div
+              className="nav-link dropdown-toggle text-dark fs-6 border"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              {sortName}
+            </div>
+            <ul className="dropdown-menu">
+              {sortOptions.map((sortType, index) => (
+                <li
+                  key={index}
+                  className="dropdown-item"
+                  onClick={() => handleSortClick(index)}
+                >
+                  {sortType}
+                </li>
+              ))}
+            </ul>
+          </li>
         </ul>
       </div>
       {products.length > 0 &&

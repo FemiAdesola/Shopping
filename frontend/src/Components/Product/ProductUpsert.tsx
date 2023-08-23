@@ -183,7 +183,7 @@ const ProductUpsert = () => {
               onChange={handleProductInput}
             >
               {CategoryType.map((category: any) => (
-                <option value={category}>{category}</option>
+                <option key={ category} value={category}>{category}</option>
               ))}
             </select>
             <input
