@@ -30,7 +30,7 @@ const Banner = () => {
               }}
               value={value}
               onChange={handleChange}
-              placeholder="Search for product!"
+              placeholder="Search for product by category!"
             />
             <span style={{ position: "relative", left: "-43px" }}>
               <i className="bi bi-search"></i>
