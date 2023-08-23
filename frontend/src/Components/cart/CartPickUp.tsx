@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Loader } from '../common';
 import { useSelector } from 'react-redux';
 import { CartItemsType, apiResponse, userType } from '../../types';
@@ -43,6 +43,16 @@ const CartPickUp = () => {
   };
   //
 
+  // UseEffect to handle lost of date when refereshing
+  useEffect(() => {
+    setUserInput({
+      name: userData.fullName,
+      email: userData.email,
+      phoneNumber: "",
+    });
+  }, [userData])
+  //
+  
   // handsubmit form
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
