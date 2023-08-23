@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import jwt_decode from "jwt-decode";
@@ -18,10 +18,13 @@ import { AllOrders, OrderConfirmed, OrderDetails, OrderList, UserOrders } from".
 
 function App() {
   const dispatch = useDispatch();
+  const [skip, setSkip] = useState(true);
     const userData: userType = useSelector(
       (state: RootState) => state.userStore
     );
-   const { data, isLoading } = useGetCartsQuery(userData.id);
+  const { data, isLoading } = useGetCartsQuery(userData.id, {
+    skip: skip,
+  });
   
    useEffect(() => {
      if (!isLoading && data) {
@@ -36,6 +39,10 @@ function App() {
       dispatch(setLoggedInUser({ fullName, id, email, role }));
     }
   }, [])
+
+  useEffect(() => {
+    if (userData.id) setSkip(false);
+  }, [userData]);
   
   return (
     <BrowserRouter>
