@@ -12,3 +12,15 @@ export enum PaymentStatus {
   COMPLETED = "Completed",
   CANCELLED = "Cancelled",
 }
+
+
+export enum Categories {
+Shoes = "Shoes",
+Book = "Book",
+Electronics = "Electronics",
+Furniture = "Furniture",
+Cloth = "Cloth",
+Vehicle = "Vehicle",
+Bag ="Bag",
+Others = "Others",
+}

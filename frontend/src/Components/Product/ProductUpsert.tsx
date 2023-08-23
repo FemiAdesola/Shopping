@@ -7,12 +7,26 @@ import {
   useGetProductByIdQuery,
   useUpdateProductMutation,
 } from "../../Apis/productApi";
+import { Categories } from "../../Utils/StaticDetails";
+
+const CategoryType = [
+  Categories.Shoes,
+  Categories.Book,
+  Categories.Bag,
+  Categories.Vehicle,
+  Categories.Electronics,
+  Categories.Furniture,
+  Categories.Cloth,
+  Categories.Others
+  ,
+];
+
 
 const productData = {
   title: "",
   description: "",
   productType: "",
-  category: "",
+  category: CategoryType[0],
   price: "",
 };
 
@@ -153,21 +167,25 @@ const ProductUpsert = () => {
               value={productInput.productType}
               onChange={handleProductInput}
             />
-            <input
+            {/* <input
               type="text"
               className="form-control mt-3"
               placeholder="Enter Category"
               name="category"
               value={productInput.category}
               onChange={handleProductInput}
-            />
-            {/* <select
+            /> */}
+            <select
               className="form-control mt-3 form-select"
               placeholder="Enter Category"
               name="category"
               value={productInput.category}
               onChange={handleProductInput}
-            ></select> */}
+            >
+              {CategoryType.map((category: any) => (
+                <option value={category}>{category}</option>
+              ))}
+            </select>
             <input
               type="number"
               className="form-control mt-3"
