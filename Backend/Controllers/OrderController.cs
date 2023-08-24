@@ -8,6 +8,7 @@ using Backend.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using System.Text.Json;
 
 namespace Backend.Controllers
 {
@@ -28,8 +29,10 @@ namespace Backend.Controllers
         [HttpGet]
         public async Task<ActionResult<ApiResponse>> GetOrders(
             string? userId, 
-            string searchString, 
-            string status)
+            string? searchString, 
+            string? status,
+            int pageNumber =1, 
+            int pageSize=6)
         {
             try
             {
@@ -39,7 +42,7 @@ namespace Backend.Controllers
                     .OrderByDescending(u => u.OrderId);
 
                 if (!string.IsNullOrEmpty(userId)){
-                    _response.Result = orders.Where(u => u.AppUserId == userId);
+                    orders = orders.Where(u => u.AppUserId == userId);
                 }
 
                 if (!string.IsNullOrEmpty(searchString))
@@ -55,11 +58,19 @@ namespace Backend.Controllers
                     orders = orders.Where(u => u.Status.ToLower() == status.ToLower());
                 }
 
-                else
+                // Paginations 
+                Pagination pagination = new()
                 {
-                    _response.StatusCode = HttpStatusCode.OK;
-                    return Ok(_response);
-                }
+                    CurrentPage = pageNumber,
+                    PageSize = pageSize,
+                    TotalRecords = orders.Count(),
+                };
+                Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagination));
+               //
+                _response.Result = orders.Skip((pageNumber-1)*pageSize).Take(pageSize);;
+                 _response.StatusCode = HttpStatusCode.OK;
+                return Ok(_response);
+                
 
             }
             catch (Exception ex)
