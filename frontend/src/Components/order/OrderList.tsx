@@ -13,7 +13,7 @@ const OrderList = ({ isLoading, orderData }: OrderListType) => {
       {isLoading && <MainLoader />}
       {!isLoading && (
         <div className="table p-5">
-          <h1 className="text-success"> Orders List </h1>
+          {/* <h1 className="text-success"> Orders List </h1> */}
           <div className="p-2">
             <div className="row border">
               <div className="col-1">ID</div>

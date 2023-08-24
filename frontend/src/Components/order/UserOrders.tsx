@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../Redux/store';
 import { useGetAllOrdersQuery } from "../../Apis/orderApi";
 import OrderList from './OrderList';
-import { Loader } from '../../Components/common';
+import { MainLoader } from '../../Components/common';
 
 
 const UserOrders = () => {
@@ -13,8 +13,15 @@ const UserOrders = () => {
   const { data, isLoading } = useGetAllOrdersQuery(userId);
   return (
     <>
-      {isLoading && <Loader />}
-      {!isLoading && <OrderList isLoading={isLoading} orderData={data.result} />}
+      {isLoading && <MainLoader />}
+      {!isLoading && (
+        <>
+          <div className="d-flex align-items-center justify-content-between mx-5 mt-5">
+            <h1 className="text-success">User Order Lists</h1>
+          </div>
+          <OrderList isLoading={isLoading} orderData={data.result} />
+        </>
+      )}
     </>
   );
 };
