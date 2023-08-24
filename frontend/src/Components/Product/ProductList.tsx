@@ -181,6 +181,28 @@ const ProductList = () => {
               ))}
             </ul>
           </li>
+          {/* <li className="nav-item dropdown" style={{ marginLeft: "auto" }}>
+            <div
+              className="nav-link dropdown-toggle text-dark fs-6 border"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Select Category
+            </div>
+            <ul className="dropdown-menu">
+              {categoryList.map((categoryName, index) => (
+                <li
+                  className={`nav-link p-0 pb-2 custom-buttons fs-5 dropdown-item ${
+                    index === 0 && "active"
+                  } `}
+                  onClick={() => handleCategoryClick(index)}
+                >
+                  {categoryName}
+                </li>
+              ))}
+            </ul>
+          </li> */}
         </ul>
       </div>
       {products.length > 0 &&
