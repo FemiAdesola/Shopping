@@ -31,7 +31,7 @@ const Footer = () => {
                 </p>
               </div>
               <div className="footer-links col-sm">
-                <h4>Useful Links</h4>
+                <h5>Useful Links</h5>
                 <ul>
                   <li>
                     <i className="bx bx-chevron-right" /> <a href="/">Home</a>
@@ -55,7 +55,7 @@ const Footer = () => {
                 </ul>
               </div>
               <div className="footer-links col-sm">
-                <h4>Our Services</h4>
+                <h5>Our Services</h5>
                 <ul>
                   <li>
                     <i className="bx bx-chevron-right" />{" "}
@@ -76,7 +76,7 @@ const Footer = () => {
                 </ul>
               </div>
               <div className="footer-newsletter col-sm">
-                <h4>Subscribe to our newsletter</h4>
+                <h5>Subscribe to our newsletter</h5>
                 <p>
                   Lorem ipsum, dolor sit amet consectetur adipisicing elit.
                   Error quod molestias sit sint repellat rerum id,

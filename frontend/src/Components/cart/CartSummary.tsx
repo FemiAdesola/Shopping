@@ -65,16 +65,16 @@ const CartSummary = () => {
               />
             </div>
 
-            <div className="p-2 mx-3" style={{ width: "100%" }}>
-              <div className="d-flex justify-content-between align-items-center">
-                <h4 style={{ fontWeight: 300 }}>{cartItem.product?.title}</h4>
-                <h4>
-                  ${(cartItem.quantity! * cartItem.product!.price).toFixed(2)}
+            <div className="p-2 mx-3 text-dark" style={{ width: "100%" }}>
+              <div className="d-flex justify-content-between text-dark align-items-center">
+                <h4 className="text-dark" style={{ fontWeight: 300 }}>{cartItem.product?.title}</h4>
+                <h4 className="text-dark">
+                  €{(cartItem.quantity! * cartItem.product!.price).toFixed(2)}
                 </h4>
               </div>
               <div className="flex-fill">
                 <h4 className="text-danger">
-                  ${cartItem.product!.price.toLocaleString("en")}
+                  €{cartItem.product!.price.toLocaleString("en")}
                 </h4>
               </div>
               <div className="d-flex justify-content-between">

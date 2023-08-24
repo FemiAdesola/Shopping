@@ -6,6 +6,7 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-v.4-green)
 ![React](https://img.shields.io/badge/React-v.18-blue)
 ![Redux toolkit](https://img.shields.io/badge/Redux-v.1.9-brown)
+![bootswatch.com](https://img.shields.io/badge/Bootswatch-v.4.0-blue)
 
 ## Table of content
 
@@ -21,6 +22,7 @@
     + PostgreSQL
     + ASP .NET Core, 
     + Entity Framework Core
+    + Stripe
 - Frontend
     + RectJS
     + Bootsrap (for design and styling)
@@ -29,6 +31,8 @@
     + react-router-dom
     + Redux RTK Query
     + jwt-decode
+    + bootswatch.com
+    + React Stripe
 
 
 ## Installation

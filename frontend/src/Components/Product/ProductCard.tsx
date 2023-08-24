@@ -79,7 +79,7 @@ const ProductCard = (props: Props) => {
                   right: "15px",
                 }}
               >
-               <Loader/>
+                <Loader />
               </div>
             ) : (
               <i
@@ -96,22 +96,28 @@ const ProductCard = (props: Props) => {
                 onClick={() => handleAddToCart(props.product.id)}
               ></i>
             )}
-            
+
             <div className="text-center">
               <p className="card-title m-0 text-success fs-3">
                 <Link
                   to={`/productDetails/${props.product.id}`}
-                  style={{ textDecoration: "none", color: "gray" }}
+                  style={{
+                    textDecoration: "none",
+                    color: "gray",
+                    fontSize: "20px",
+                  }}
                 >
                   {props.product.title}
                 </Link>
               </p>
-              <p className="badge bg-secondary" style={{ fontSize: "8px" }}>
+              <p className="badge bg-secondary" style={{ fontSize: "15px" }}>
                 {props.product.category}
               </p>
             </div>
             <div className="row text-center">
-              <h5>€{props.product.price.toLocaleString("en")}</h5>
+              <h5 style={{ fontSize: "15px" }}>
+                €{props.product.price.toLocaleString("en")}
+              </h5>
             </div>
           </div>
         </div>
