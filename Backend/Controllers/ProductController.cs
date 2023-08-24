@@ -1,4 +1,5 @@
 using System.Net;
+using System.Text.Json;
 using Backend.Database;
 using Backend.DTOs;
 using Backend.Extension;
@@ -30,9 +31,22 @@ namespace Backend.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetProducts()
+        public async Task<IActionResult> GetProducts(
+            int pageNumber =1, 
+            int pageSize=6)
         {
-            _response.Result =  _context.Products;
+             IEnumerable<Product> products =
+                    _context.Products;
+             // Paginations 
+                Pagination pagination = new()
+                {
+                    CurrentPage = pageNumber,
+                    PageSize = pageSize,
+                    TotalRecords = products.Count(),
+                };
+                Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagination));
+
+            _response.Result =  products.Skip((pageNumber-1)*pageSize).Take(pageSize);;
             _response.StatusCode = HttpStatusCode.OK;
             return Ok(_response);
         }

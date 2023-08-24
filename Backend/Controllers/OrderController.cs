@@ -67,7 +67,7 @@ namespace Backend.Controllers
                 };
                 Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagination));
                //
-                _response.Result = orders.Skip((pageNumber-1)*pageSize).Take(pageSize);;
+                _response.Result = orders.Skip((pageNumber-1)*pageSize).Take(pageSize);
                  _response.StatusCode = HttpStatusCode.OK;
                 return Ok(_response);
                 
