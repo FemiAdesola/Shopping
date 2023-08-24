@@ -10,7 +10,7 @@ import { MainLoader } from '../../Components/common';
 
 const UserOrders = () => {
   const userId = useSelector((state: RootState) => state.userStore.id);
-  const { data, isLoading } = useGetAllOrdersQuery(userId);
+  const { data, isLoading } = useGetAllOrdersQuery({userId});
   return (
     <>
       {isLoading && <MainLoader />}

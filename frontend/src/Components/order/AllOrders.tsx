@@ -18,8 +18,17 @@ const filterOptions = [
 ];
 
 const AllOrders = () => {
-  const { data, isLoading } = useGetAllOrdersQuery("");
   const [filters, setFilters] = useState({ searchString: "", status: "" });
+  const [apiFilters, setApiFilters] = useState({
+    searchString: "",
+    status: "",
+  });
+    const { data, isLoading } = useGetAllOrdersQuery({
+      ...(apiFilters && {
+        searchString: apiFilters.searchString,
+        status: apiFilters.status,
+      }),
+    });
 //    console.log(data.result);
   const [orderData, setOrderData] = useState([]);
   
@@ -30,19 +39,26 @@ const AllOrders = () => {
     setFilters(inputValue);
   };
   const handleFilters = () => {
-    const itemData = data.result.filter((orderData: OrderType) => {
-      if ((orderData.pickupName && orderData.pickupName.includes(filters.searchString))
-        || (orderData.pickupEmail && orderData.pickupEmail.includes(filters.searchString))
-        || (orderData.pickupPhoneNumber && orderData.pickupPhoneNumber.includes(filters.searchString))
-      ) {
-        return orderData;
-      }
-    });
-    const finalArray = itemData.filter((orderData: OrderType) =>
-      filters.status !== "" ? orderData.status === filters.status : orderData
-    );
+    //for locsl filer
+    // const itemData = data.result.filter((orderData: OrderType) => {
+    //   if ((orderData.pickupName && orderData.pickupName.includes(filters.searchString))
+    //     || (orderData.pickupEmail && orderData.pickupEmail.includes(filters.searchString))
+    //     || (orderData.pickupPhoneNumber && orderData.pickupPhoneNumber.includes(filters.searchString))
+    //   ) {
+    //     return orderData;
+    //   }
+    // });
+    // const finalArray = itemData.filter((orderData: OrderType) =>
+    //   filters.status !== "" ? orderData.status === filters.status : orderData
+    // );
 
-    setOrderData(finalArray);
+    // setOrderData(finalArray);
+
+    // Api filter
+    setApiFilters({
+      searchString:filters.searchString,
+      status:filters.status
+    })
   };
   
    useEffect(() => {
