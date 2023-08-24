@@ -26,11 +26,14 @@ namespace Backend.Controllers
 
         [Authorize]
         [HttpGet]
-        public async Task<ActionResult<ApiResponse>> GetOrders(string? userId)
+        public async Task<ActionResult<ApiResponse>> GetOrders(
+            string? userId, 
+            string searchString, 
+            string status)
         {
             try
             {
-               var orders =
+                IEnumerable<Order> orders =
                     _context.Orders.Include(u => u.OrderDetails)
                     .ThenInclude(u => u.Product)
                     .OrderByDescending(u => u.OrderId);
@@ -38,6 +41,20 @@ namespace Backend.Controllers
                 if (!string.IsNullOrEmpty(userId)){
                     _response.Result = orders.Where(u => u.AppUserId == userId);
                 }
+
+                if (!string.IsNullOrEmpty(searchString))
+                {
+                    orders = orders
+                        .Where(u => u.PickupPhoneNumber.ToLower().Contains(searchString.ToLower()) ||
+                    u.PickupEmail.ToLower().Contains(searchString.ToLower()) 
+                    || u.PickupName.ToLower().Contains(searchString.ToLower()));
+                }
+                
+                if (!string.IsNullOrEmpty(status))
+                {
+                    orders = orders.Where(u => u.Status.ToLower() == status.ToLower());
+                }
+
                 else
                 {
                     _response.StatusCode = HttpStatusCode.OK;
