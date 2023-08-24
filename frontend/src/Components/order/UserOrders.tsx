@@ -19,7 +19,7 @@ const UserOrders = () => {
           <div className="d-flex align-items-center justify-content-between mx-5 mt-5">
             <h1 className="text-success">User Order Lists</h1>
           </div>
-          <OrderList isLoading={isLoading} orderData={data.result} />
+          <OrderList isLoading={isLoading} orderData={data?.apiResponse.result} />
         </>
       )}
     </>
