@@ -30,6 +30,7 @@ const AllOrders = () => {
     pageSize: 5,
   });
   //
+  const [currentPageSize, setCurrentPageSize] = useState(pageOptions.pageSize); // for dropdown page
   const { data, isLoading } = useGetAllOrdersQuery({
     ...(apiFilters && {
       searchString: apiFilters.searchString,
@@ -96,12 +97,20 @@ const AllOrders = () => {
       setPageOptions({ pageSize: 5, pageNumber: pageOptions.pageNumber - 1 });
     } else if (direction === "next") {
       setPageOptions({ pageSize: 5, pageNumber: pageOptions.pageNumber + 1 });
-    } else if (direction === "change") {
+    }
+    // for dropdown page option change
+    else if (direction === "change") {
       setPageOptions({
         pageSize: pageSize ? pageSize : 5,
         pageNumber: 1,
       });
     }
+    //
+  };
+
+  const handleDropDownPage = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    handlePageOptionChange("change", Number(event.target.value));
+    setCurrentPageSize(Number(event.target.value));
   };
 
   return (
@@ -141,6 +150,20 @@ const AllOrders = () => {
           </div>
           <OrderList isLoading={isLoading} orderData={orderData} />
           <div className="d-flex mx-5 justify-content-end align-items-center">
+            <div>Rows per page: </div>
+            <div>
+              <select
+                className="form-select mx-2"
+                onChange={handleDropDownPage}
+                style={{ width: "80px" }}
+                value={currentPageSize}
+              >
+                <option>5</option>
+                <option>10</option>
+                <option>15</option>
+                <option>20</option>
+              </select>
+            </div>
             <div className="mx-2">{getPageDetails()}</div>
             <button
               onClick={() => handlePageOptionChange("prev")}
