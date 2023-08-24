@@ -146,7 +146,7 @@ const ProductList = () => {
         <ul className="nav w-100 d-flex justify-content-center">
           {categoryList.map((categoryName, index) => (
             <li
-              className="nav-item"
+              className="nav-item text-light"
               style={{ ...(index === 0 && { marginLeft: "auto" }) }}
               key={index}
             >

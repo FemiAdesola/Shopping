@@ -39,10 +39,10 @@ const ProductCard = (props: Props) => {
       <div className=" productcard col-md-4 col-12 pt-4 ">
         <div
           className="card"
-          style={{ boxShadow: "0 1px 7px 0 rgb(0 0 0 / 50%" }}
+          style={{ boxShadow: "0 1px 1px 0 rgb(0 0 0 / 30%" }}
         >
-          <div className="card-body pt-2">
-            <div className="row col-10 offset-1 p-4 image ">
+          <div className="card-body pt-3">
+            <div className="row col-10 offset-1 p-3 image ">
               <Link to={`/productDetails/${props.product.id}`}>
                 <img
                   src={props.product.image}
@@ -106,12 +106,12 @@ const ProductCard = (props: Props) => {
                   {props.product.title}
                 </Link>
               </p>
-              <p className="badge bg-secondary" style={{ fontSize: "12px" }}>
+              <p className="badge bg-secondary" style={{ fontSize: "8px" }}>
                 {props.product.category}
               </p>
             </div>
             <div className="row text-center">
-              <h4>€{props.product.price.toLocaleString("en")}</h4>
+              <h5>€{props.product.price.toLocaleString("en")}</h5>
             </div>
           </div>
         </div>

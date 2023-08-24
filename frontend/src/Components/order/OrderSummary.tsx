@@ -26,8 +26,6 @@ const OrderSummary = ({ data, userInput }: orderSummaryType) => {
         };
   
   const handleNextStatus = async () => {
-    console.log(data)
-    console.log(statusMessage);
     setIsLoading(true);
     await updateOrder({
       orderId: data.id,

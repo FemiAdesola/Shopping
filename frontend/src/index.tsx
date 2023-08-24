@@ -9,6 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import App from './Container/App';
 import { store } from './Redux/store';
 import { Provider } from 'react-redux';
+import "bootswatch/dist/cyborg/bootstrap.css";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

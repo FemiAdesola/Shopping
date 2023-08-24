@@ -157,10 +157,13 @@ code {
     width: 30%;
     height: 40px;
 }
-
+.productcard {
+  width: 100%;
+  height: 30%;
+}
 .productcard img{
   width: 100%;
-  height: 250px;
+  height: 200px;
 }
 
 .productcard .image :hover {
@@ -208,7 +211,7 @@ code {
 .custom-buttons {
   border: 0;
   background: transparent;
-  color: #212529 !important;
+  color: #d4dfeb !important;
   margin: 12px 24px;
 
   /* border-radius: 20px; */
