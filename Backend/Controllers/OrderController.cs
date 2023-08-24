@@ -7,6 +7,7 @@ using Backend.Helper;
 using Backend.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Backend.Controllers
 {
@@ -23,6 +24,7 @@ namespace Backend.Controllers
             _response = new ApiResponse();
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<ApiResponse>> GetOrders(string? userId)
         {

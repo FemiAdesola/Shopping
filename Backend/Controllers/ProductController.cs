@@ -2,8 +2,10 @@ using System.Net;
 using Backend.Database;
 using Backend.DTOs;
 using Backend.Extension;
+using Backend.Helper;
 using Backend.Model;
 using Backend.Services.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -57,6 +59,7 @@ namespace Backend.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = SD.Role_Admin)]
         public async Task<ActionResult<ApiResponse>> CreateProduct([FromForm]ProductCreateDTO productCreateDTO)
         {
             try
@@ -99,6 +102,7 @@ namespace Backend.Controllers
             return _response;
         }
 
+        [Authorize(Roles = SD.Role_Admin)]
         [HttpPut("{id:int}")]
         public async Task<ActionResult<ApiResponse>> UpdateProduct(int id, [FromForm]ProductUpdateDTO productUpdateDTO)
         {
@@ -153,6 +157,7 @@ namespace Backend.Controllers
             return _response;
         }
 
+        [Authorize(Roles = SD.Role_Admin)]
         [HttpDelete("{id:int}")]
         public async Task<ActionResult<ApiResponse>> DeleteProduct(int id)
         {
