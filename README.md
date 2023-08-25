@@ -56,28 +56,33 @@
 ## Getting started
 - Users have to generate a token and insert it before they could be able to get total access to all the functionality at backend.
 
-### Frontend product page
+### Frontend (UI) page
 
-![Frontend](/FullStack/img/FrontPage.png)
+![Frontend](/FullStack/img2/FrontPage.png)
 
 ### Product page by admin user
 
 + Only admin can update or delete the product
 
-![Frontend](/FullStack/img/Productlist.png)
+![Frontend](/FullStack/img2/Productlist.png)
 
 ### Order list page by admin user
 
 + Only admin can view this page 
 
-![Frontend](/FullStack/img/Orderlist.png)
+![Frontend](/FullStack/img2/Orderlist.png)
 
 ### Order Summary page by admin user
 
 + Only admin can view this page, by following the processing 
 
-![Frontend](/FullStack/img/OrderSummary.png)
+![Frontend](/FullStack/img2/OrderSummary.png)
 
 + For customer order's summary page 
 
-![Frontend](/FullStack/img/Usersummary.png)
+![Frontend](/FullStack/img2/Usersummary.png)
+
+
+### Backend page
+
+![Frontend](/FullStack/img2/Backend.png)
