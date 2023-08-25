@@ -42,7 +42,7 @@ In addition, the backend was modeled first by designing the model from top to bo
 - Steps to perform the installation for the `Backend`
     + Register the database server with PostgreSQL
     + Check your local machine for .NET Core compatibility from microsoft webiste
-    + Create an `appsettings.json` file in to main root like [example.json](/FullStack/Backend/example.json) file
+    + Create an `appsettings.json` file in to main root like [example.json](./Backend/example.json) file
     + Perform these following commands
         1. dotnet restore
         2. dotnet build
