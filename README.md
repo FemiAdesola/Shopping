@@ -58,31 +58,31 @@
 
 ### Frontend (UI) page
 
-![Frontend](/FullStack/img2/FrontPage.png)
+![Frontend](./img2/FrontPage.png)
 
 ### Product page by admin user
 
 + Only admin can update or delete the product
 
-![Frontend](/FullStack/img2/Productlist.png)
+![ProductList](./img2/Productlist.png)
 
 ### Order list page by admin user
 
 + Only admin can view this page 
 
-![Frontend](/FullStack/img2/Orderlist.png)
+![Orderlist](./img2/Orderlist.png)
 
 ### Order Summary page by admin user
 
 + Only admin can view this page, by following the processing 
 
-![Frontend](/FullStack/img2/OrderSummary.png)
+![Ordersummary](./img2/OrderSummary.png)
 
 + For customer order's summary page 
 
-![Frontend](/FullStack/img2/Usersummary.png)
+![usersummary](./img2/Usersummary.png)
 
 
 ### Backend page
 
-![Frontend](/FullStack/img2/Backend.png)
+![Backend](/FullStack/img2/Backend.png)
