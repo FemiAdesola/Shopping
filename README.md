@@ -85,4 +85,4 @@
 
 ### Backend page
 
-![Backend](/FullStack/img2/Backend.png)
+![Backend](./img2/Backend.png)
