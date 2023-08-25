@@ -17,6 +17,10 @@
 
 ## Introduction
 
+This is the full-stack project built with ASP .NET core for the backend and React Redux RTK for the Frontend. For getting the full-stack project overview, eCommerce is used as an example to illustrate the connection.
+This project aims to understand the connection between the backend, database structure, and the frontend.
+In addition, the backend was modeled first by designing the model from top to bottom and vice versa with ERD (Entity Relation Diagram) to get the relation needed, such as one-one, one-many, and many-many.
+
 ## Technologies
 - Backend
     + PostgreSQL
@@ -33,7 +37,6 @@
     + jwt-decode
     + bootswatch.com
     + React Stripe
-
 
 ## Installation
 - Steps to perform the installation for the `Backend`
