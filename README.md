@@ -54,3 +54,30 @@
         1.  Write `npm start` on your terminal 
 
 ## Getting started
+- Users have to generate a token and insert it before they could be able to get total access to all the functionality at backend.
+
+### Frontend product page
+
+![Frontend](/FullStack/img/FrontPage.png)
+
+### Product page by admin user
+
++ Only admin can update or delete the product
+
+![Frontend](/FullStack/img/Productlist.png)
+
+### Order list page by admin user
+
++ Only admin can view this page 
+
+![Frontend](/FullStack/img/Orderlist.png)
+
+### Order Summary page by admin user
+
++ Only admin can view this page, by following the processing 
+
+![Frontend](/FullStack/img/OrderSummary.png)
+
++ For customer order's summary page 
+
+![Frontend](/FullStack/img/Usersummary.png)
