@@ -171,7 +171,7 @@ const ProductList = () => {
     // for dropdown page option change
     else if (direction === "change") {
       setPageOptions({
-        pageSize: pageSize ? pageSize : 6,
+        pageSize: pageSize ? pageSize : 5,
         pageNumber: 1,
       });
     }
@@ -230,28 +230,6 @@ const ProductList = () => {
               ))}
             </ul>
           </li>
-          {/* <li className="nav-item dropdown" style={{ marginLeft: "auto" }}>
-            <div
-              className="nav-link dropdown-toggle text-dark fs-6 border"
-              role="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              Select Category
-            </div>
-            <ul className="dropdown-menu">
-              {categoryList.map((categoryName, index) => (
-                <li
-                  className={`nav-link p-0 pb-2 custom-buttons fs-5 dropdown-item ${
-                    index === 0 && "active"
-                  } `}
-                  onClick={() => handleCategoryClick(index)}
-                >
-                  {categoryName}
-                </li>
-              ))}
-            </ul>
-          </li> */}
         </ul>
       </div>
       {(data?.apiResponse.result.length || products.length) > 0 &&
@@ -260,6 +238,12 @@ const ProductList = () => {
             <ProductCard product={product} key={index} />
           )
         )}
+      {/* {(products.length) > 0 &&
+        (products).map(
+          (product: ProductType, index: number) => (
+            <ProductCard product={product} key={index} />
+          )
+        )} */}
       {/*  */}
       <div className="d-flex mx-5 mt-4 justify-content-end align-items-center">
         <div>Rows per page: </div>
