@@ -11,27 +11,43 @@ import { SortTypes } from "../../Utils/StaticDetails";
 
 const ProductList = () => {
   const dispatch = useDispatch();
-  const { data, isLoading } = useGetProductsQuery(null);
+
   const [products, setProducts] = useState<ProductType[]>([]);
 
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [categoryList, setCategoryList] = useState([""]);
   const [sortName, setSortName] = useState(SortTypes.NAME_A_Z);
-  
+
+  // about page
+  const [totalRecords, setTotalRecords] = useState(0);
+  const [pageOptions, setPageOptions] = useState({
+    pageNumber: 1,
+    pageSize: 6,
+  });
+  //
+  const [currentPageSize, setCurrentPageSize] = useState(pageOptions.pageSize); // for dropdown page
+  const { data, isLoading } = useGetProductsQuery({
+    pageNumber: pageOptions.pageNumber,
+    pageSize: pageOptions.pageSize,
+  });
+  const handleDropDownPage = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    handlePageOptionChange("change", Number(event.target.value));
+    setCurrentPageSize(Number(event.target.value));
+  };
+
   const sortOptions: Array<SortTypes> = [
     SortTypes.PRICE_LOW_HIGH,
     SortTypes.PRICE_HIGH_LOW,
     SortTypes.NAME_A_Z,
     SortTypes.NAME_Z_A,
   ];
-  
+
   const searchValue: any = useSelector(
     (state: RootState) => state.searchStore.search
   );
 
   useEffect(() => {
-    if (data && data.result) {
-      // dispatch(setProduct(data.result));
+    if (data && data.apiResponse.result) {
       const searchProductArray = handleFilters(
         sortName,
         selectedCategory,
@@ -43,11 +59,14 @@ const ProductList = () => {
 
   useEffect(() => {
     if (!isLoading) {
-      dispatch(setProduct(data.result));
-      setProducts(data.result);
+      dispatch(setProduct(data?.apiResponse.result));
+
+      setProducts(data?.apiResponse.result); // take note
+      const { TotalRecords } = JSON.parse(data?.totalRecords);
+      setTotalRecords(TotalRecords);
 
       const categoryListData = ["All"];
-      data.result.forEach((item: ProductType) => {
+      data?.apiResponse.result.forEach((item: ProductType) => {
         if (categoryListData.indexOf(item.category) === -1) {
           categoryListData.push(item.category);
         }
@@ -93,11 +112,11 @@ const ProductList = () => {
   ) => {
     let tempArray =
       category === "All"
-        ? [...data.result]
-        : data.result.filter(
-          (item: ProductType) =>
-            item.category.toUpperCase() === category.toUpperCase()
-        );
+        ? [...data?.apiResponse.result]
+        : data?.apiResponse.result.filter(
+            (item: ProductType) =>
+              item.category.toUpperCase() === category.toUpperCase()
+          );
 
     //search functionality
     if (search) {
@@ -129,7 +148,36 @@ const ProductList = () => {
       );
     }
     return tempArray;
-  }
+  };
+
+  // pagination
+  const getPageDetails = () => {
+    const dataStartNumber =
+      (pageOptions.pageNumber - 1) * pageOptions.pageSize + 1;
+    const dataEndNumber = pageOptions.pageNumber * pageOptions.pageSize;
+
+    return `${dataStartNumber}
+             - 
+            ${
+              dataEndNumber < totalRecords ? dataEndNumber : totalRecords
+            } of ${totalRecords}`;
+  };
+  const handlePageOptionChange = (direction: string, pageSize?: number) => {
+    if (direction === "prev") {
+      setPageOptions({ pageSize: 6, pageNumber: pageOptions.pageNumber - 1 });
+    } else if (direction === "next") {
+      setPageOptions({ pageSize: 6, pageNumber: pageOptions.pageNumber + 1 });
+    }
+    // for dropdown page option change
+    else if (direction === "change") {
+      setPageOptions({
+        pageSize: pageSize ? pageSize : 6,
+        pageNumber: 1,
+      });
+    }
+    //
+  };
+  //
 
   if (isLoading) {
     return (
@@ -142,6 +190,7 @@ const ProductList = () => {
 
   return (
     <div className="container row">
+      <h5 className="text-success">Total products: {totalRecords}</h5>
       <div className="my-3">
         <ul className="nav w-100 d-flex justify-content-center">
           {categoryList.map((categoryName, index) => (
@@ -205,10 +254,47 @@ const ProductList = () => {
           </li> */}
         </ul>
       </div>
-      {products.length > 0 &&
-        products.map((product: ProductType, index: number) => (
-          <ProductCard product={product} key={index} />
-        ))}
+      {(data?.apiResponse.result.length || products.length) > 0 &&
+        (data?.apiResponse.result || products).map(
+          (product: ProductType, index: number) => (
+            <ProductCard product={product} key={index} />
+          )
+        )}
+      {/*  */}
+      <div className="d-flex mx-5 mt-4 justify-content-end align-items-center">
+        <div>Rows per page: </div>
+        <div>Rows per page: </div>
+        <div>
+          <select
+            className="form-select mx-2"
+            onChange={handleDropDownPage}
+            style={{ width: "80px" }}
+            value={currentPageSize}
+          >
+            <option>6</option>
+            <option>12</option>
+            <option>15</option>
+            <option>20</option>
+          </select>
+        </div>
+        <div className="mx-2">{getPageDetails()}</div>
+        <button
+          onClick={() => handlePageOptionChange("prev")}
+          disabled={pageOptions.pageNumber === 1}
+          className="btn btn-outline-primary px-3 mx-2"
+        >
+          <i className="bi bi-chevron-left"></i>
+        </button>
+        <button
+          onClick={() => handlePageOptionChange("next")}
+          disabled={
+            pageOptions.pageNumber * pageOptions.pageSize >= totalRecords
+          }
+          className="btn btn-outline-primary px-3 mx-2"
+        >
+          <i className="bi bi-chevron-right"></i>
+        </button>
+      </div>
     </div>
   );
 };

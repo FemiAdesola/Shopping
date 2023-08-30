@@ -85,6 +85,15 @@ In addition, the backend was modeled first by designing the model from top to bo
 
 ![usersummary](./img2/Usersummary.png)
 
+### Payment  page
+
+![Payment](./img2/PaymentPage.png)
+
+### Confirmation page
+
+![Confirmation](./img2/Confirmation.png)
+
+
 
 ### Backend page
 

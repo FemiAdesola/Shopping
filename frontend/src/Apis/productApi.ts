@@ -12,10 +12,22 @@ export const productApi = createApi({
   tagTypes: ["products"],
   endpoints: (builder) => ({
     getProducts: builder.query({
-      query: () => ({
+      query: ({ pageSize, pageNumber }) => ({
         url: "products",
         method: "GET",
+        params: {
+          pageSize: pageSize,
+          pageNumber: pageNumber,
+          // ...(pageSize && { pageSize }),
+          // ...(pageNumber && { pageNumber }),
+        },
       }),
+      transformResponse(apiResponse: { result: any }, meta: any) {
+        return {
+          apiResponse,
+          totalRecords: meta.response.headers.get("X-Pagination"),
+        };
+      },
       providesTags: ["products"],
     }),
     getProductById: builder.query({

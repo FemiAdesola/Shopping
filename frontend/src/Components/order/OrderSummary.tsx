@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 import React, { useState } from 'react';
 import { CartItemsType, orderSummaryType } from '../../types';
 import statusColor from '../Helper/statusColor';
@@ -25,15 +26,16 @@ const OrderSummary = ({ data, userInput }: orderSummaryType) => {
           value: PaymentStatus.COMPLETED,
         };
   
-  const handleNextStatus = async () => {
-    setIsLoading(true);
-    await updateOrder({
-      orderId: data.id,
-      status: statusMessage.value,
-    });
+    const handleNextStatus = async () => {
+      setIsLoading(true);
+      console.log(statusMessage.value);
+      await updateOrder({
+        orderId: data.id,
+        status: statusMessage.value,
+      });
 
-    setIsLoading(false);
-  };
+      setIsLoading(false);
+    };
 
   const handleCancel = async () => {
     setIsLoading(true);
@@ -63,7 +65,7 @@ const OrderSummary = ({ data, userInput }: orderSummaryType) => {
               Phone : {userInput.phoneNumber}
             </div>
             <div className="border py-3 px-2">
-              <h4 className="text-success">Menu Items</h4>
+              <h4 className="text-success">Product Items</h4>
               <div className="p-3">
                 {data.cartItems?.map(
                   (cartItem: CartItemsType, index: number) => {

@@ -164,6 +164,7 @@ namespace Backend.Controllers
             }
             return _response;
         }
+
         [HttpPut("{id:int}")]
         public async Task<ActionResult<ApiResponse>>UpdateOrder(int id, [FromBody] OrderUpdateDTO orderUpdateDTO)
         {
@@ -176,7 +177,7 @@ namespace Backend.Controllers
                     return BadRequest();
                 }
 
-                Order orderFromDb = _context.Orders.FirstOrDefault(u => u.OrderId == id);
+                Order orderFromDb = _context.Orders.FirstOrDefault(u => u.OrderId == id)!;
                 if (orderFromDb == null)
                 {
                     _response.IsSuccess = false;
